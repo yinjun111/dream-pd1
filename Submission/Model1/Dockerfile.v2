@@ -1,0 +1,80 @@
+
+FROM ubuntu:latest
+
+ENV DEBIAN_FRONTEND=noninteractive
+
+
+RUN apt-get update 
+#RUN deb https://cloud.r-project.org/bin/linux/ubuntu focal-cran40/
+
+RUN apt-get update && apt-get -y install --no-install-recommends --no-install-suggests \
+        ca-certificates software-properties-common gnupg2 gnupg1 \
+	&& apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E298A3A825C0D65DFD57CBB651716619E084DAB9 \
+      && add-apt-repository 'deb https://cloud.r-project.org/bin/linux/ubuntu focal-cran40/' \
+      && apt-get install -f -y --no-install-recommends r-base r-cran-modelmetrics r-cran-caret r-api-3.5 r-cran-foreach r-cran-plyr r-cran-reshape2 r-cran-recipes r-cran-pro
+
+
+#RUN apt-get install -y --no-install-recommends build-essential r-base r-cran-caret python3.6 python3-pip python3-setuptools python3-dev
+
+RUN apt-get install -y --no-install-recommends build-essential python3.6 python3-pip python3-setuptools python3-dev
+
+#WORKDIR /app
+
+#COPY requirements.txt /app/requirements.txt
+
+RUN pip3 install tidepy numpy pandas==1.0.5
+
+#RUN Rscript -e "install.packages('data.table')"
+
+#COPY . /app
+
+
+
+#install for TIDE
+#FROM python:3.7
+
+#RUN pip install tidepy numpy pandas==1.0.5
+
+COPY codes/run_tide.py /codes/run_tide.py
+
+CMD ["python", "/codes/run_tide.py", "/data/GRCh37ERCC_refseq105_genes_tpm.csv", "/output/test_tide.txt"]
+
+#WORKDIR /training
+COPY training/data_tide.txt /training/data_impres.txt
+
+
+#FROM r-base:4.0.2
+#FROM jrowen/dcaret
+
+#install for IMPRES
+
+#RUN R -e "install.packages('devtools', repos = 'http://cran.us.r-project.org')"
+#RUN R -e "devtools::install_github('Benjamin-Vincent-Lab/binfotron')"
+
+RUN R -e "install.packages('remotes', repos = 'http://cran.us.r-project.org')"
+RUN R -e "remotes::install_github('Benjamin-Vincent-Lab/binfotron')"
+
+#install for Szabo
+RUN R -e "install.packages('data.table', repos = 'http://cran.us.r-project.org')"
+RUN R -e "install.packages('BiocManager', repos = 'http://cran.us.r-project.org')"
+RUN R -e "BiocManager::install('NOISeq')"
+RUN R -e "install.packages('caret', repos = 'http://cran.us.r-project.org')"
+
+COPY codes/szabo_inflammation_signature.R /codes/szabo_inflammation_signature.R
+COPY codes/run_IMPRES.R /codes/run_IMPRES.R
+COPY codes/EDA_model1_submission.R /codes/EDA_model1_submission.R
+
+COPY training/data_impres.txt /training/data_impres.txt
+COPY training/data_szabo.txt /training/data_impres.txt
+COPY training/data_clinical.txt /training/data_clinical.txt
+
+RUN R -e 'stopifnot("binfotron" %in% installed.packages()[,"Package"])'
+RUN R -e 'stopifnot("caret" %in% installed.packages()[,"Package"])'
+
+#Run commands to generate features for Test data
+CMD ["Rscript", "/codes/szabo_inflammation_signature.R", "/data/GRCh37ERCC_refseq105_genes_count.csv", "/output/test_szabo.txt"]
+CMD ["Rscript", "/codes/run_IMPRES.R", "/data/GRCh37ERCC_refseq105_genes_tpm.csv", "/output/test_impres.txt"]
+
+
+#Model and predict
+CMD ["Rscript", "/codes/EDA_model1_submission.R"]

@@ -1,0 +1,72 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+
+
+```{r}
+
+library(caret)
+library(e1071)
+library(pROC)
+diabetes<-read.csv(url('https://raw.githubusercontent.com/jbrownlee/Datasets/master/pima-indians-diabetes.data.csv'))
+N_all = nrow(diabetes)
+N_train = round(0.75*(N_all))
+N_test = N_all-N_train
+diabetes_train <- diabetes[1:N_train,]
+diabetes_test <- diabetes[N_train+1:N_all,]
+classifier <- glm(X1~X6+X148+X72+X35+X0+X33.6+X0.627+X50,family='binomial',data=diabetes_train)
+
+
+```
+
+
+lasso, ridge
+
+```{r}
+
+library(tidyverse)
+library(caret)
+library(glmnet)
+
+# Load the data and remove NAs
+data("PimaIndiansDiabetes2", package = "mlbench")
+PimaIndiansDiabetes2 <- na.omit(PimaIndiansDiabetes2)
+# Inspect the data
+sample_n(PimaIndiansDiabetes2, 3)
+# Split the data into training and test set
+set.seed(123)
+training.samples <- PimaIndiansDiabetes2$diabetes %>% 
+  createDataPartition(p = 0.8, list = FALSE)
+train.data  <- PimaIndiansDiabetes2[training.samples, ]
+test.data <- PimaIndiansDiabetes2[-training.samples, ]
+
+
+# Dumy code categorical predictor variables
+x <- model.matrix(diabetes~., train.data)[,-1]
+# Convert the outcome (class) to a numerical variable
+y <- ifelse(train.data$diabetes == "pos", 1, 0)
+
+
+#Lasso, to estimate lambda
+cv.lasso <- cv.glmnet(x, y, alpha = 1, family = "binomial")
+# Fit the final model on the training data
+model <- glmnet(x, y, alpha = 1, family = "binomial",
+                lambda = cv.lasso$lambda.min)
+# Display regression coefficients
+coef(model)
+# Make predictions on the test data
+x.test <- model.matrix(diabetes ~., test.data)[,-1]
+probabilities <- model %>% predict(newx = x.test)
+predicted.classes <- ifelse(probabilities > 0.5, "pos", "neg")
+# Model accuracy
+observed.classes <- test.data$diabetes
+mean(predicted.classes == observed.classes)
+
+
+
+
+```
+
+

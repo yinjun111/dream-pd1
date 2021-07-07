@@ -1,0 +1,487 @@
+---
+title: "R Notebook"
+output: html_notebook
+editor_options: 
+  chunk_output_type: console
+---
+
+
+```{r}
+library(plyr)
+library(readr)
+library(dplyr)
+library(caret)
+library(ggplot2)
+library(repr)
+
+library("pROC") 
+library(e1071)
+
+library(tidyverse)
+library(glmnet)
+```
+
+
+
+Test iAtlas data sets
+
+```{r}
+
+setwd("C:\\Projects_External\\DREAM\\Model")
+
+save.image("Model_test.rdata")
+
+
+iatlas.data<-read.csv("../iATLAS/iatlas-io-data-2021-01-22.csv")
+iatlas.expr<-read.csv("../iATLAS/iatlas-io-im-expr2021-01-22.csv")
+iatlas.metadata<-read.csv("../iATLAS/iatlas-io-metadata-2021-01-22.csv")
+
+iatlas.merged<-read.table("../iATLAS/iatlas-merged.txt",header=T,row.names=1,sep="\t")
+
+```
+
+
+```{r}
+
+iatlas.merged.sel<-iatlas.merged[!is.na(iatlas.merged[,70]),]
+
+iatlas.var<-iatlas.merged[,c(5:12,17:68,87:161,70)]
+
+#iatlas.res<-iatlas.merged[,70]
+                              
+          
+iatlas.var.sel<-iatlas.var[!is.na(iatlas.merged[,70]),]    
+#iatlas.res.sel<-iatlas.res[!is.na(iatlas.res)]
+
+
+```
+
+
+
+```{r}
+set.seed(100) 
+
+dat<-iatlas.var.sel
+
+#dat$Responder<-as.numeric(as.factor(dat$Responder))
+
+
+dat$Responder<-rep(1,nrow(dat))
+dat$Responder[iatlas.var.sel$Responder=="Non-Responder"]=0
+
+dat$Responder<-as.factor(dat$Responder)
+
+#featurePlot(x=dat[,1:(ncol(dat)-1)], y=dat$Responder, plot="density")
+
+index = sample(1:nrow(dat), 0.7*nrow(dat)) 
+
+train = dat[index,] # Create the training data 
+test = dat[-index,] # Create the test data
+
+dim(train)
+dim(test)
+
+
+```
+
+
+scale
+
+```{r}
+
+cols<-1:(ncol(train)-1)
+
+
+pre_proc_val <- preProcess(dat[,cols], method = c("center", "scale"))
+
+dat.norm<-dat
+dat.norm[,cols] = predict(pre_proc_val, dat[,cols])
+
+train.norm<-dat.norm[index,]
+test.norm<-dat.norm[-index,]
+
+#pre_proc_val <- preProcess(train[,cols], method = c("center", "scale"))
+#train[,cols] = predict(pre_proc_val, train[,cols])
+#test[,cols] = predict(pre_proc_val, test[,cols])
+
+#summary(train)
+```
+
+
+
+
+Linear regression for dummy variable
+```{r}
+
+lr = lm(Responder ~ ., data = train)
+
+#glm for logistic model
+#lr = glm(Responder ~ ., data = train,family = "binomial")
+
+summary(lr)
+
+
+#Step 1 - create the evaluation metrics function
+
+eval_metrics = function(model, df, predictions, target){
+    resids = df[,target] - predictions
+    resids2 = resids**2
+    N = length(predictions)
+    r2 = as.character(round(summary(model)$r.squared, 2))
+    adj_r2 = as.character(round(summary(model)$adj.r.squared, 2))
+    cat("Adjusted R-squared",adj_r2,"\n") #Adjusted R-squared
+    cat("RMSE",as.character(round(sqrt(sum(resids2)/N), 2)),"\n") #RMSE
+}
+
+# Step 2 - predicting and evaluating the model on train data
+predictions = predict(lr, newdata = train)
+eval_metrics(lr, train, predictions, target = 'Responder')
+
+# Step 3 - predicting and evaluating the model on test data
+predictions = predict(lr, newdata = test)
+eval_metrics(lr, test, predictions, target = 'Responder')
+
+
+
+eval_pred<-function(x) {
+  results<-rep(1,length(x))
+  results[x>1.5]=2
+  results
+}
+
+
+predictions.bin<-eval_pred(predictions)
+
+confusionMatrix(as.factor(predictions.bin),as.factor(test$Responder))
+
+#ROC
+
+plot(roc(test$Responder, predictions), print.auc = TRUE)
+#AUC,0.694
+
+
+
+
+```
+
+
+Logistic regression, normalized separatedly
+
+```{r}
+
+#glm for logistic model
+fit.lg = glm(Responder ~ ., data = train,family = "binomial")
+
+summary(fit.lg)
+
+
+# Step 2 - predicting and evaluating the model on train data
+fit.lg.train.probs = predict(fit.lg, newdata = train,type="response")
+
+fit.lg.train.pred<-ifelse(fit.lg.probs>0.5,1,0)
+
+confusionMatrix(as.factor(fit.lg.pred),as.factor(train$Responder))
+
+plot(roc(train$Responder, fit.lg.train.probs), print.auc = TRUE)
+
+
+# Step 3 - predicting and evaluating the model on test data
+
+fit.lg.test.probs<-predict(fit.lg, newdata = test)
+
+fit.lg.test.pred<-ifelse(fit.lg.test.probs>0.5,1,0)
+
+confusionMatrix(as.factor(fit.lg.test.pred),as.factor(test.norm$Responder))
+
+plot(roc(test$Responder, fit.lg.test.probs), print.auc = TRUE)
+
+
+```
+
+
+
+Logistic regression, normalized together
+
+```{r}
+
+#glm for logistic model
+fit.lg.norm2 = glm(Responder ~ ., data = train.norm,family = "binomial")
+
+summary(fit.lg.norm2)
+
+
+# Step 2 - predicting and evaluating the model on train data
+fit.lg.norm2.train.probs = predict(fit.lg.norm2, newdata = train.norm,type="response")
+
+fit.lg.norm2.train.pred<-ifelse(fit.lg.norm2.train.probs>0.5,1,0)
+
+confusionMatrix(as.factor(fit.lg.norm2.train.pred),as.factor(train.norm$Responder))
+
+plot(roc(train.norm$Responder, fit.lg.norm2.train.probs), print.auc = TRUE)
+
+
+# Step 3 - predicting and evaluating the model on test data
+
+fit.lg.norm2.test.probs<-predict(fit.lg.norm2, newdata = test.norm)
+
+fit.lg.norm2.test.pred<-ifelse(fit.lg.norm2.test.probs>0.5,1,0)
+
+confusionMatrix(as.factor(fit.lg.norm2.test.pred),as.factor(test$Responder))
+
+plot(roc(test.norm$Responder, fit.lg.norm2.test.probs), print.auc = TRUE)
+
+
+```
+
+
+Logistic regression, unnorm
+```{r}
+
+#glm for logistic model
+fit.lg.unnorm = glm(Responder ~ ., data = train,family = "binomial")
+
+summary(fit.lg.unnorm)
+
+
+# Step 2 - predicting and evaluating the model on train data
+fit.lg.unnorm.train.probs = predict(fit.lg.unnorm, newdata = train,type="response")
+
+fit.lg.unnorm.train.pred<-ifelse(fit.lg.unnorm.train.probs>0.5,1,0)
+
+confusionMatrix(as.factor(fit.lg.unnorm.train.pred),as.factor(train$Responder))
+
+plot(roc(train$Responder, fit.lg.unnorm.train.probs), print.auc = TRUE)
+
+
+# Step 3 - predicting and evaluating the model on test data
+
+fit.lg.unnorm.test.probs<-predict(fit.lg.unnorm, newdata = test)
+
+fit.lg.unnorm.test.pred<-ifelse(fit.lg.unnorm.test.probs>0.5,1,0)
+
+confusionMatrix(as.factor(fit.lg.unnorm.test.pred),as.factor(test$Responder))
+
+plot(roc(test$Responder, fit.lg.unnorm.test.probs), print.auc = TRUE)
+
+```
+
+
+LASSO, unnorm
+```{r}
+
+
+# Dumy code categorical predictor variables
+x <- model.matrix(diabetes~., train.data)[,-1]
+# Convert the outcome (class) to a numerical variable
+y <- ifelse(train.data$diabetes == "pos", 1, 0)
+
+
+train.x<-as.matrix(train[,-ncol(train)])
+train.y=train$Responder
+
+#Lasso, to estimate lambda
+cv.lasso <- cv.glmnet(x, y, alpha = 1, family = "binomial")
+# Fit the final model on the training data
+fit.lasso <- glmnet(x, y, alpha = 1, family = "binomial",
+                lambda = cv.lasso$lambda.min)
+# Display regression coefficients
+coef(fit.lasso)
+
+
+#pred for training
+fit.lasso.train.prob <- fit.lasso %>% predict(newx = train.x)
+fit.lasso.train.pred <- ifelse(fit.lasso.train.prob > 0.5, 1, 0)
+
+confusionMatrix(as.factor(fit.lasso.train.pred),as.factor(train$Responder))
+
+
+# Make predictions on the test data
+test.x<-as.matrix(test[,-ncol(test)])
+test.y=test$Responder
+
+
+fit.lasso.test.probabilities <- fit.lasso %>% predict(newx = test.x)
+fit.lasso.test.pred <- ifelse(fit.lasso.test.probabilities > 0.5, 1, 0)
+
+# Model accuracy
+#observed.classes <- test.data$diabetes
+#mean(predicted.classes == observed.classes)
+
+confusionMatrix(as.factor(fit.lasso.test.pred),as.factor(test$Responder))
+
+plot(roc(test$Responder, fit.lasso.test.probabilities), print.auc = TRUE)
+
+
+```
+
+SVM
+
+
+```{r}
+
+dat.svm<-dat
+dat.svm$Responder<-as.factor(iatlas.var.sel$Responder)
+
+
+#index = sample(1:nrow(dat), 0.7*nrow(dat)) 
+
+train.svm = dat.svm[index,] # Create the training data 
+test.svm = dat.svm[-index,] # Create the test data
+
+
+train_control <- trainControl(method="repeatedcv", number=10, repeats=3)
+
+
+svm1 <- train(Responder ~., data = train.svm, method = "svmLinear", trControl = train_control,  preProcess = c("center","scale"))
+#View the model
+svm1
+
+
+fit.svm1.test.probs<-predict(svm1, newdata = test.svm)
+confusionMatrix(as.factor(fit.svm1.test.probs),as.factor(test.svm$Responder))
+
+
+svm2 <- train(Responder ~., data = train.svm, method = "svmLinear", trControl = train_control,  preProcess = c("center","scale"),tuneGrid = expand.grid(C = seq(0, 2, length = 20)))
+#View the model
+svm2
+
+
+
+
+# Fit the model , non-linear SVM
+svm3 <- train(Responder ~., data = train.svm, method = "svmRadial", trControl = train_control, preProcess = c("center","scale"), tuneLength = 10)
+# Print the best tuning parameter sigma and C that maximizes model accuracy
+svm3$bestTune
+
+
+
+```
+
+Random Forest
+
+```{r}
+
+tunegrid <- expand.grid(.mtry = (1:15)) 
+
+# fit a random forest model (using ranger)
+#rf_fit <- train(Responder ~ ., 
+#                data = train.svm, 
+#                method = "ranger")
+
+
+rf_gridsearch <- train(Responder ~ ., 
+                       data = train.svm,
+                       method = 'rf',
+                       metric = 'Accuracy',
+                       tuneGrid = tunegrid)
+#mtry 1
+print(rf_gridsearch)
+
+#
+varImp(rf_gridsearch, scale = FALSE)
+
+
+```
+
+
+Logistic for aPD1
+
+```{r}
+
+dat.pd1<-dat[iatlas.merged.sel$Antibody=="aPD1",]
+
+dat.pd1.Responder<-dat.pd1$Responder
+
+dat.pd1$Responder<-rep(1,nrow(dat.pd1))
+dat.pd1$Responder[dat.pd1.Responder=="Non-Responder"]=0
+
+
+index.pd1 = sample(1:nrow(dat.pd1), 0.7*nrow(dat.pd1)) 
+
+dat.pd1.norm<-dat.pd1
+dat.pd1.norm[,cols] = predict(pre_proc_val, dat.pd1[,cols])
+
+dat.pd1.train.norm<-dat.pd1.norm[index.pd1,]
+dat.pd1.test.norm<-dat.pd1.norm[-index.pd1,]
+
+
+#glm for logistic model
+dat.pd1.fit.lg.norm2 = glm(Responder ~ ., data = dat.pd1.train.norm,family = "binomial", maxit = 100)
+
+summary(fit.lg.norm2)
+
+
+# Step 2 - predicting and evaluating the model on train data
+dat.pd1.fit.lg.norm2.train.probs = predict(dat.pd1.fit.lg.norm2, newdata = dat.pd1.train.norm,type="response")
+
+dat.pd1.fit.lg.norm2.train.pred<-ifelse(dat.pd1.fit.lg.norm2.train.probs>0.5,1,0)
+
+confusionMatrix(as.factor(dat.pd1.fit.lg.norm2.train.pred),as.factor(dat.pd1.train.norm$Responder))
+
+plot(roc(train.norm$Responder, fit.lg.norm2.train.probs), print.auc = TRUE)
+
+
+# Step 3 - predicting and evaluating the model on test data
+
+dat.pd1.fit.lg.norm2.test.probs<-predict(dat.pd1.fit.lg.norm2, newdata = dat.pd1.test.norm)
+
+dat.pd1.fit.lg.norm2.test.pred<-ifelse(dat.pd1.fit.lg.norm2.test.probs>0.5,1,0)
+
+confusionMatrix(as.factor(dat.pd1.fit.lg.norm2.test.pred),as.factor(dat.pd1.test.norm$Responder))
+
+plot(roc(dat.pd1.test.norm$Responder, dat.pd1.fit.lg.norm2.test.probs), print.auc = TRUE)
+
+
+
+```
+
+AutoMl
+
+```{r}
+
+# Load library
+library(h2o)
+# start h2o cluster
+invisible(h2o.init())
+
+
+dat.pd1$Responder<-as.factor(dat.pd1$Responder)
+
+# convert data as h2o type
+train_h = as.h2o(dat.pd1[index.pd1,])
+test_h = as.h2o(dat.pd1[-index.pd1,])
+
+
+# set label type
+y = 'Responder'
+pred = setdiff(names(dat.pd1), y)
+
+#convert variables to factors
+#train[,y] = as.factor(train[,y])
+#test[,y] = as.factor(test[,y])
+
+# Run AutoML for 20 base models
+aml = h2o.automl(x = pred, y = y,
+                  training_frame = train_h,
+                  max_models = 20,
+                  seed = 1,
+                  max_runtime_secs = 20
+                 )
+# AutoML Leaderboard
+lb = aml@leaderboard
+lb
+# prediction result on test data
+prediction = h2o.predict(aml@leader, test_h)
+
+
+# create a confusion matrix
+confusionMatrix(dat.pd1[-index.pd1,"Responder"], as.factor(as.vector(prediction$predict)))
+
+# close h2o connection
+h2o.shutdown(prompt = F)
+
+
+```
+
+
+

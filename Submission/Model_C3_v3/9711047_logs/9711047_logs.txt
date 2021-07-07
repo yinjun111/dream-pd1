@@ -1,0 +1,266 @@
+STDERR: 2021-02-25T04:34:23.441005099Z 9e53af840e21 2021-02-25 04:34:23,440 MainThread INFO cwltool: Resolved '/var/lib/docker/volumes/workflow_orchestrator_shared/_data/42a15c2e-2ba6-4027-9c9f-efc6a6b134ad/Anti-PD1-DREAM-Infrastructure-master/workflow.cwl' to 'file:///var/lib/docker/volumes/workflow_orchestrator_shared/_data/42a15c2e-2ba6-4027-9c9f-efc6a6b134ad/Anti-PD1-DREAM-Infrastructure-master/workflow.cwl'
+STDERR: 2021-02-25T04:34:29.310947239Z 9e53af840e21 2021-02-25 04:34:29,310 MainThread WARNING cwltool: Workflow checker warning:
+STDERR: 2021-02-25T04:34:29.310980581Z Anti-PD1-DREAM-Infrastructure-master/workflow.cwl:70:9:  Source 'docker_repository' of type
+STDERR: 2021-02-25T04:34:29.310985059Z                                                          ["null", "string"] may be incompatible
+STDERR: 2021-02-25T04:34:29.310988961Z Anti-PD1-DREAM-Infrastructure-master/workflow.cwl:271:9:   with sink 'docker_repository' of type
+STDERR: 2021-02-25T04:34:29.310992501Z                                                            "string"
+STDERR: 2021-02-25T04:34:29.310996320Z Anti-PD1-DREAM-Infrastructure-master/workflow.cwl:71:9:  Source 'docker_digest' of type ["null",
+STDERR: 2021-02-25T04:34:29.311000241Z                                                          "string"] may be incompatible
+STDERR: 2021-02-25T04:34:29.311003938Z Anti-PD1-DREAM-Infrastructure-master/workflow.cwl:273:9:   with sink 'docker_digest' of type
+STDERR: 2021-02-25T04:34:29.311007871Z                                                            "string"
+STDERR: 2021-02-25T04:34:29.311011601Z Anti-PD1-DREAM-Infrastructure-master/workflow.cwl:70:9:  Source 'docker_repository' of type
+STDERR: 2021-02-25T04:34:29.311014780Z                                                          ["null", "string"] may be incompatible
+STDERR: 2021-02-25T04:34:29.311018265Z Anti-PD1-DREAM-Infrastructure-master/workflow.cwl:149:9:   with sink 'docker_repository' of type
+STDERR: 2021-02-25T04:34:29.311021797Z                                                            "string"
+STDERR: 2021-02-25T04:34:29.311025692Z Anti-PD1-DREAM-Infrastructure-master/workflow.cwl:71:9:  Source 'docker_digest' of type ["null",
+STDERR: 2021-02-25T04:34:29.311029432Z                                                          "string"] may be incompatible
+STDERR: 2021-02-25T04:34:29.311033085Z Anti-PD1-DREAM-Infrastructure-master/workflow.cwl:151:9:   with sink 'docker_digest' of type
+STDERR: 2021-02-25T04:34:29.311036509Z                                                            "string"
+STDERR: 2021-02-25T04:34:31.638280771Z 9e53af840e21 2021-02-25 04:34:31,637 MainThread INFO toil: Running Toil version 4.1.0-5ad5e77d98e1456b4f70f5b00e688a43cdce2ebe.
+STDERR: 2021-02-25T04:34:32.626147012Z INFO:toil.worker:Redirecting logging to /var/lib/docker/volumes/workflow_orchestrator_shared/_data/42a15c2e-2ba6-4027-9c9f-efc6a6b134ad/node-3ec6f9b1-3261-4276-b701-39c1eedf83bf-16349ee66b573b0d6cff3dbc6912349f/tmp2yy1ego8/worker_log.txt
+STDERR: 2021-02-25T04:34:33.184472115Z 9e53af840e21 2021-02-25 04:34:33,184 MainThread INFO toil.leader: 0 jobs are running, 0 jobs are issued and waiting to run
+STDERR: 2021-02-25T04:34:33.186443744Z 9e53af840e21 2021-02-25 04:34:33,186 MainThread INFO toil.leader: Issued job 'https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/v3.0/cwl/get_docker_config.cwl' python3 kind-https_raw.githubusercontent.com_Sage-Bionetworks_ChallengeWorkflowTemplates_v3.0_cwl_get_docker_config.cwl/instance-11hp14dc with job batch system ID: 1 and cores: 1, disk: 1.0 G, and memory: 100.0 M
+STDERR: 2021-02-25T04:34:33.186565800Z 9e53af840e21 2021-02-25 04:34:33,186 MainThread INFO toil.leader: Issued job 'https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/v3.0/cwl/get_submission.cwl' challengeutils kind-https_raw.githubusercontent.com_Sage-Bionetworks_ChallengeWorkflowTemplates_v3.0_cwl_get_submission.cwl/instance-4mhqf_ny with job batch system ID: 2 and cores: 1, disk: 1.0 G, and memory: 100.0 M
+STDERR: 2021-02-25T04:34:33.186709705Z 9e53af840e21 2021-02-25 04:34:33,186 MainThread INFO toil.leader: Issued job 'https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/v3.0/cwl/validate_docker.cwl' challengeutils kind-https_raw.githubusercontent.com_Sage-Bionetworks_ChallengeWorkflowTemplates_v3.0_cwl_validate_docker.cwl/instance-grflxysu with job batch system ID: 3 and cores: 1, disk: 1.0 G, and memory: 100.0 M
+STDERR: 2021-02-25T04:34:33.186856109Z 9e53af840e21 2021-02-25 04:34:33,186 MainThread INFO toil.leader: Issued job 'file:///var/lib/docker/volumes/workflow_orchestrator_shared/_data/42a15c2e-2ba6-4027-9c9f-efc6a6b134ad/Anti-PD1-DREAM-Infrastructure-master/get_goldstandard.cwl' python3 get_gold.py kind-file_var_lib_docker_volumes_workflow_orchestrator_shared__data_42a15c2e-2ba6-4027-9c9f-efc6a6b134ad_Anti-PD1-DREAM-Infrastructure-master_get_goldstandard.cwl/instance-1h8yst9i with job batch system ID: 4 and cores: 1, disk: 1.0 G, and memory: 100.0 M
+STDERR: 2021-02-25T04:34:33.187011379Z 9e53af840e21 2021-02-25 04:34:33,186 MainThread INFO toil.leader: Issued job 'https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/v3.0/cwl/set_permissions.cwl' challengeutils kind-https_raw.githubusercontent.com_Sage-Bionetworks_ChallengeWorkflowTemplates_v3.0_cwl_set_permissions.cwl/instance-ll2m4rjs with job batch system ID: 5 and cores: 1, disk: 1.0 G, and memory: 100.0 M
+STDERR: 2021-02-25T04:34:33.187143940Z 9e53af840e21 2021-02-25 04:34:33,187 MainThread INFO toil.leader: Issued job 'https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/v3.0/cwl/set_permissions.cwl' challengeutils kind-https_raw.githubusercontent.com_Sage-Bionetworks_ChallengeWorkflowTemplates_v3.0_cwl_set_permissions.cwl/instance-g7ngt64o with job batch system ID: 6 and cores: 1, disk: 1.0 G, and memory: 100.0 M
+STDERR: 2021-02-25T04:34:34.598969900Z INFO:toil.worker:Redirecting logging to /var/lib/docker/volumes/workflow_orchestrator_shared/_data/42a15c2e-2ba6-4027-9c9f-efc6a6b134ad/node-3ec6f9b1-3261-4276-b701-39c1eedf83bf-16349ee66b573b0d6cff3dbc6912349f/tmp1fcqta1g/worker_log.txt
+STDERR: 2021-02-25T04:34:34.670967733Z INFO:toil.worker:Redirecting logging to /var/lib/docker/volumes/workflow_orchestrator_shared/_data/42a15c2e-2ba6-4027-9c9f-efc6a6b134ad/node-3ec6f9b1-3261-4276-b701-39c1eedf83bf-16349ee66b573b0d6cff3dbc6912349f/tmpl301dpd4/worker_log.txt
+STDERR: 2021-02-25T04:34:34.673937871Z INFO:toil.worker:Redirecting logging to /var/lib/docker/volumes/workflow_orchestrator_shared/_data/42a15c2e-2ba6-4027-9c9f-efc6a6b134ad/node-3ec6f9b1-3261-4276-b701-39c1eedf83bf-16349ee66b573b0d6cff3dbc6912349f/tmph03pu4qv/worker_log.txt
+STDERR: 2021-02-25T04:34:34.695990036Z INFO:toil.worker:Redirecting logging to /var/lib/docker/volumes/workflow_orchestrator_shared/_data/42a15c2e-2ba6-4027-9c9f-efc6a6b134ad/node-3ec6f9b1-3261-4276-b701-39c1eedf83bf-16349ee66b573b0d6cff3dbc6912349f/tmpr73o3foi/worker_log.txt
+STDERR: 2021-02-25T04:34:34.733020382Z INFO:toil.worker:Redirecting logging to /var/lib/docker/volumes/workflow_orchestrator_shared/_data/42a15c2e-2ba6-4027-9c9f-efc6a6b134ad/node-3ec6f9b1-3261-4276-b701-39c1eedf83bf-16349ee66b573b0d6cff3dbc6912349f/tmpeg5z998c/worker_log.txt
+STDERR: 2021-02-25T04:34:34.818623842Z INFO:toil.worker:Redirecting logging to /var/lib/docker/volumes/workflow_orchestrator_shared/_data/42a15c2e-2ba6-4027-9c9f-efc6a6b134ad/node-3ec6f9b1-3261-4276-b701-39c1eedf83bf-16349ee66b573b0d6cff3dbc6912349f/tmphfcjydh8/worker_log.txt
+STDERR: 2021-02-25T04:34:35.569704073Z 9e53af840e21 2021-02-25 04:34:35,568 MainThread INFO toil.leader: Job ended: 'file:///var/lib/docker/volumes/workflow_orchestrator_shared/_data/42a15c2e-2ba6-4027-9c9f-efc6a6b134ad/Anti-PD1-DREAM-Infrastructure-master/get_goldstandard.cwl' python3 get_gold.py kind-file_var_lib_docker_volumes_workflow_orchestrator_shared__data_42a15c2e-2ba6-4027-9c9f-efc6a6b134ad_Anti-PD1-DREAM-Infrastructure-master_get_goldstandard.cwl/instance-1h8yst9i
+STDERR: 2021-02-25T04:34:37.751975130Z 9e53af840e21 2021-02-25 04:34:37,751 MainThread INFO toil.leader: Job ended: 'https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/v3.0/cwl/get_docker_config.cwl' python3 kind-https_raw.githubusercontent.com_Sage-Bionetworks_ChallengeWorkflowTemplates_v3.0_cwl_get_docker_config.cwl/instance-11hp14dc
+STDERR: 2021-02-25T04:34:38.534603394Z 9e53af840e21 2021-02-25 04:34:38,526 MainThread INFO toil.leader: Job ended: 'https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/v3.0/cwl/get_submission.cwl' challengeutils kind-https_raw.githubusercontent.com_Sage-Bionetworks_ChallengeWorkflowTemplates_v3.0_cwl_get_submission.cwl/instance-4mhqf_ny
+STDERR: 2021-02-25T04:34:38.534628330Z 9e53af840e21 2021-02-25 04:34:38,527 MainThread INFO toil.leader: Issued job 'file:///var/lib/docker/volumes/workflow_orchestrator_shared/_data/42a15c2e-2ba6-4027-9c9f-efc6a6b134ad/Anti-PD1-DREAM-Infrastructure-master/determine_submission_number.cwl' python3 get_submission_number.py kind-file_var_lib_docker_volumes_workflow_orchestrator_shared__data_42a15c2e-2ba6-4027-9c9f-efc6a6b134ad_Anti-PD1-DREAM-Infrastructure-master_determine_submission_number.cwl/instance-hg4a58ax with job batch system ID: 7 and cores: 1, disk: 1.0 G, and memory: 100.0 M
+STDERR: 2021-02-25T04:34:38.534635077Z 9e53af840e21 2021-02-25 04:34:38,528 MainThread INFO toil.leader: Issued job 'file:///var/lib/docker/volumes/workflow_orchestrator_shared/_data/42a15c2e-2ba6-4027-9c9f-efc6a6b134ad/Anti-PD1-DREAM-Infrastructure-master/determine_question.cwl' kind-file_var_lib_docker_volumes_workflow_orchestrator_shared__data_42a15c2e-2ba6-4027-9c9f-efc6a6b134ad_Anti-PD1-DREAM-Infrastructure-master_determine_question.cwl/instance-2fbbx4im with job batch system ID: 8 and cores: 1, disk: 1.0 G, and memory: 100.0 M
+STDERR: 2021-02-25T04:34:39.223973381Z 9e53af840e21 2021-02-25 04:34:39,222 MainThread INFO toil.leader: Job ended: 'https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/v3.0/cwl/set_permissions.cwl' challengeutils kind-https_raw.githubusercontent.com_Sage-Bionetworks_ChallengeWorkflowTemplates_v3.0_cwl_set_permissions.cwl/instance-g7ngt64o
+STDERR: 2021-02-25T04:34:39.293955687Z 9e53af840e21 2021-02-25 04:34:39,292 MainThread INFO toil.leader: Job ended: 'https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/v3.0/cwl/validate_docker.cwl' challengeutils kind-https_raw.githubusercontent.com_Sage-Bionetworks_ChallengeWorkflowTemplates_v3.0_cwl_validate_docker.cwl/instance-grflxysu
+STDERR: 2021-02-25T04:34:39.296005371Z 9e53af840e21 2021-02-25 04:34:39,293 MainThread INFO toil.leader: Issued job 'file:///var/lib/docker/volumes/workflow_orchestrator_shared/_data/42a15c2e-2ba6-4027-9c9f-efc6a6b134ad/Anti-PD1-DREAM-Infrastructure-master/run_docker.cwl' python3 kind-file_var_lib_docker_volumes_workflow_orchestrator_shared__data_42a15c2e-2ba6-4027-9c9f-efc6a6b134ad_Anti-PD1-DREAM-Infrastructure-master_run_docker.cwl/instance-wxl7r7bl with job batch system ID: 9 and cores: 1, disk: 1.0 G, and memory: 100.0 M
+STDERR: 2021-02-25T04:34:39.296042956Z 9e53af840e21 2021-02-25 04:34:39,293 MainThread INFO toil.leader: Issued job 'https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/v3.0/cwl/validate_email.cwl' python3 kind-https_raw.githubusercontent.com_Sage-Bionetworks_ChallengeWorkflowTemplates_v3.0_cwl_validate_email.cwl/instance-d_v6k3qr with job batch system ID: 10 and cores: 1, disk: 1.0 G, and memory: 100.0 M
+STDERR: 2021-02-25T04:34:39.296049078Z 9e53af840e21 2021-02-25 04:34:39,293 MainThread INFO toil.leader: Issued job 'https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/v3.0/cwl/annotate_submission.cwl' challengeutils kind-https_raw.githubusercontent.com_Sage-Bionetworks_ChallengeWorkflowTemplates_v3.0_cwl_annotate_submission.cwl/instance-safx_p4p with job batch system ID: 11 and cores: 1, disk: 1.0 G, and memory: 100.0 M
+STDERR: 2021-02-25T04:34:39.327961130Z 9e53af840e21 2021-02-25 04:34:39,326 MainThread INFO toil.leader: Job ended: 'https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/v3.0/cwl/set_permissions.cwl' challengeutils kind-https_raw.githubusercontent.com_Sage-Bionetworks_ChallengeWorkflowTemplates_v3.0_cwl_set_permissions.cwl/instance-ll2m4rjs
+STDERR: 2021-02-25T04:34:39.870962397Z INFO:toil.worker:Redirecting logging to /var/lib/docker/volumes/workflow_orchestrator_shared/_data/42a15c2e-2ba6-4027-9c9f-efc6a6b134ad/node-3ec6f9b1-3261-4276-b701-39c1eedf83bf-16349ee66b573b0d6cff3dbc6912349f/tmpnl_1hmj1/worker_log.txt
+STDERR: 2021-02-25T04:34:40.111992047Z INFO:toil.worker:Redirecting logging to /var/lib/docker/volumes/workflow_orchestrator_shared/_data/42a15c2e-2ba6-4027-9c9f-efc6a6b134ad/node-3ec6f9b1-3261-4276-b701-39c1eedf83bf-16349ee66b573b0d6cff3dbc6912349f/tmphxiadben/worker_log.txt
+STDERR: 2021-02-25T04:34:40.730922690Z 9e53af840e21 2021-02-25 04:34:40,722 MainThread INFO toil.leader: Job ended: 'file:///var/lib/docker/volumes/workflow_orchestrator_shared/_data/42a15c2e-2ba6-4027-9c9f-efc6a6b134ad/Anti-PD1-DREAM-Infrastructure-master/determine_question.cwl' kind-file_var_lib_docker_volumes_workflow_orchestrator_shared__data_42a15c2e-2ba6-4027-9c9f-efc6a6b134ad_Anti-PD1-DREAM-Infrastructure-master_determine_question.cwl/instance-2fbbx4im
+STDERR: 2021-02-25T04:34:40.789021194Z INFO:toil.worker:Redirecting logging to /var/lib/docker/volumes/workflow_orchestrator_shared/_data/42a15c2e-2ba6-4027-9c9f-efc6a6b134ad/node-3ec6f9b1-3261-4276-b701-39c1eedf83bf-16349ee66b573b0d6cff3dbc6912349f/tmpirhy3gm1/worker_log.txt
+STDERR: 2021-02-25T04:34:40.824955601Z INFO:toil.worker:Redirecting logging to /var/lib/docker/volumes/workflow_orchestrator_shared/_data/42a15c2e-2ba6-4027-9c9f-efc6a6b134ad/node-3ec6f9b1-3261-4276-b701-39c1eedf83bf-16349ee66b573b0d6cff3dbc6912349f/tmp4ib7ww_9/worker_log.txt
+STDERR: 2021-02-25T04:34:40.942210244Z INFO:toil.worker:Redirecting logging to /var/lib/docker/volumes/workflow_orchestrator_shared/_data/42a15c2e-2ba6-4027-9c9f-efc6a6b134ad/node-3ec6f9b1-3261-4276-b701-39c1eedf83bf-16349ee66b573b0d6cff3dbc6912349f/tmpg6r_7zt5/worker_log.txt
+STDERR: 2021-02-25T04:34:42.952847950Z 9e53af840e21 2021-02-25 04:34:42,952 MainThread INFO toil.leader: Job ended: 'file:///var/lib/docker/volumes/workflow_orchestrator_shared/_data/42a15c2e-2ba6-4027-9c9f-efc6a6b134ad/Anti-PD1-DREAM-Infrastructure-master/run_docker.cwl' python3 kind-file_var_lib_docker_volumes_workflow_orchestrator_shared__data_42a15c2e-2ba6-4027-9c9f-efc6a6b134ad_Anti-PD1-DREAM-Infrastructure-master_run_docker.cwl/instance-wxl7r7bl
+STDERR: 2021-02-25T04:34:42.953294413Z 9e53af840e21 2021-02-25 04:34:42,953 MainThread WARNING toil.leader: The job seems to have left a log file, indicating failure: 'file:///var/lib/docker/volumes/workflow_orchestrator_shared/_data/42a15c2e-2ba6-4027-9c9f-efc6a6b134ad/Anti-PD1-DREAM-Infrastructure-master/run_docker.cwl' python3 kind-file_var_lib_docker_volumes_workflow_orchestrator_shared__data_42a15c2e-2ba6-4027-9c9f-efc6a6b134ad_Anti-PD1-DREAM-Infrastructure-master_run_docker.cwl/instance-wxl7r7bl
+STDERR: 2021-02-25T04:34:42.953528708Z 9e53af840e21 2021-02-25 04:34:42,953 MainThread WARNING toil.leader: Log from job kind-file_var_lib_docker_volumes_workflow_orchestrator_shared__data_42a15c2e-2ba6-4027-9c9f-efc6a6b134ad_Anti-PD1-DREAM-Infrastructure-master_run_docker.cwl/instance-wxl7r7bl follows:
+STDERR: 2021-02-25T04:34:42.953535483Z =========>
+STDERR: 2021-02-25T04:34:42.953538875Z 	INFO:toil.worker:---TOIL WORKER OUTPUT LOG---
+STDERR: 2021-02-25T04:34:42.953542153Z 	INFO:toil:Running Toil version 4.1.0-5ad5e77d98e1456b4f70f5b00e688a43cdce2ebe.
+STDERR: 2021-02-25T04:34:42.953545467Z 	[job run_docker.cwl] /var/lib/docker/volumes/workflow_orchestrator_shared/_data/42a15c2e-2ba6-4027-9c9f-efc6a6b134ad/node-3ec6f9b1-3261-4276-b701-39c1eedf83bf-16349ee66b573b0d6cff3dbc6912349f/tmpg6r_7zt5/3ffd5489-3c54-4535-8150-4bdc20b7da1a/tziyutrhj/tmp-outriitig61$ python3 \
+STDERR: 2021-02-25T04:34:42.953549463Z 	    /var/lib/docker/volumes/workflow_orchestrator_shared/_data/42a15c2e-2ba6-4027-9c9f-efc6a6b134ad/node-3ec6f9b1-3261-4276-b701-39c1eedf83bf-16349ee66b573b0d6cff3dbc6912349f/tmpg6r_7zt5/3ffd5489-3c54-4535-8150-4bdc20b7da1a/tziyutrhj/tmp-outriitig61/run_docker.py \
+STDERR: 2021-02-25T04:34:42.953553538Z 	    -s \
+STDERR: 2021-02-25T04:34:42.953556664Z 	    9711047 \
+STDERR: 2021-02-25T04:34:42.953559703Z 	    -p \
+STDERR: 2021-02-25T04:34:42.953562843Z 	    docker.synapse.org/syn23682103/sbp_bsr_challenge3 \
+STDERR: 2021-02-25T04:34:42.953566177Z 	    -d \
+STDERR: 2021-02-25T04:34:42.953569358Z 	    sha256:01f2c00824ade2e2ddc53c8e2b59724e68184d113326da2baa9c6a5450047fe0 \
+STDERR: 2021-02-25T04:34:42.953572690Z 	    --store \
+STDERR: 2021-02-25T04:34:42.953575830Z 	    --status \
+STDERR: 2021-02-25T04:34:42.953578821Z 	    VALIDATED \
+STDERR: 2021-02-25T04:34:42.953581958Z 	    --parentid \
+STDERR: 2021-02-25T04:34:42.953584943Z 	    syn24990920 \
+STDERR: 2021-02-25T04:34:42.953587982Z 	    -c \
+STDERR: 2021-02-25T04:34:42.953591026Z 	    /var/lib/docker/volumes/workflow_orchestrator_shared/_data/42a15c2e-2ba6-4027-9c9f-efc6a6b134ad/tmp67dophb2/stg6ebd9562-e9de-4632-95f7-829417d0fb73/.synapseConfig \
+STDERR: 2021-02-25T04:34:42.953594880Z 	    -i \
+STDERR: 2021-02-25T04:34:42.953598033Z 	    /home01/centos/challenge_data/CM_026_formatted_synthetic_data
+STDERR: 2021-02-25T04:34:42.953601387Z 	INFO:cwltool:[job run_docker.cwl] /var/lib/docker/volumes/workflow_orchestrator_shared/_data/42a15c2e-2ba6-4027-9c9f-efc6a6b134ad/node-3ec6f9b1-3261-4276-b701-39c1eedf83bf-16349ee66b573b0d6cff3dbc6912349f/tmpg6r_7zt5/3ffd5489-3c54-4535-8150-4bdc20b7da1a/tziyutrhj/tmp-outriitig61$ python3 \
+STDERR: 2021-02-25T04:34:42.953605344Z 	    /var/lib/docker/volumes/workflow_orchestrator_shared/_data/42a15c2e-2ba6-4027-9c9f-efc6a6b134ad/node-3ec6f9b1-3261-4276-b701-39c1eedf83bf-16349ee66b573b0d6cff3dbc6912349f/tmpg6r_7zt5/3ffd5489-3c54-4535-8150-4bdc20b7da1a/tziyutrhj/tmp-outriitig61/run_docker.py \
+STDERR: 2021-02-25T04:34:42.953614124Z 	    -s \
+STDERR: 2021-02-25T04:34:42.953617890Z 	    9711047 \
+STDERR: 2021-02-25T04:34:42.953621010Z 	    -p \
+STDERR: 2021-02-25T04:34:42.953624060Z 	    docker.synapse.org/syn23682103/sbp_bsr_challenge3 \
+STDERR: 2021-02-25T04:34:42.953627288Z 	    -d \
+STDERR: 2021-02-25T04:34:42.953630369Z 	    sha256:01f2c00824ade2e2ddc53c8e2b59724e68184d113326da2baa9c6a5450047fe0 \
+STDERR: 2021-02-25T04:34:42.953633689Z 	    --store \
+STDERR: 2021-02-25T04:34:42.953636734Z 	    --status \
+STDERR: 2021-02-25T04:34:42.953639832Z 	    VALIDATED \
+STDERR: 2021-02-25T04:34:42.953642994Z 	    --parentid \
+STDERR: 2021-02-25T04:34:42.953645986Z 	    syn24990920 \
+STDERR: 2021-02-25T04:34:42.953648983Z 	    -c \
+STDERR: 2021-02-25T04:34:42.953652025Z 	    /var/lib/docker/volumes/workflow_orchestrator_shared/_data/42a15c2e-2ba6-4027-9c9f-efc6a6b134ad/tmp67dophb2/stg6ebd9562-e9de-4632-95f7-829417d0fb73/.synapseConfig \
+STDERR: 2021-02-25T04:34:42.953655580Z 	    -i \
+STDERR: 2021-02-25T04:34:42.953658633Z 	    /home01/centos/challenge_data/CM_026_formatted_synthetic_data
+STDERR: 2021-02-25T04:34:42.953662085Z 	Welcome, antipd1dreamservice!
+STDERR: 2021-02-25T04:34:42.953665190Z
+STDERR: 2021-02-25T04:34:42.953668201Z 	root
+STDERR: 2021-02-25T04:34:42.953671289Z 	mounting volumes
+STDERR: 2021-02-25T04:34:42.953674306Z 	checking for containers
+STDERR: 2021-02-25T04:34:42.953677398Z 	Traceback (most recent call last):
+STDERR: 2021-02-25T04:34:42.953680478Z 	  File "/usr/local/lib/python3.6/site-packages/docker/api/client.py", line 220, in _raise_for_status
+STDERR: 2021-02-25T04:34:42.953683946Z 	    response.raise_for_status()
+STDERR: 2021-02-25T04:34:42.953686985Z 	  File "/usr/local/lib/python3.6/site-packages/requests/models.py", line 943, in raise_for_status
+STDERR: 2021-02-25T04:34:42.953690437Z 	    raise HTTPError(http_error_msg, response=self)
+STDERR: 2021-02-25T04:34:42.953693637Z 	requests.exceptions.HTTPError: 404 Client Error: Not Found for url: http+docker://localunixsocket/v1.30/containers/84053b0eaff0283c8be20e49908af5c69c97bd1096d6c3baef5e0fb0115c0de5/json
+STDERR: 2021-02-25T04:34:42.953697280Z
+STDERR: 2021-02-25T04:34:42.953700210Z 	During handling of the above exception, another exception occurred:
+STDERR: 2021-02-25T04:34:42.953703477Z
+STDERR: 2021-02-25T04:34:42.953706337Z 	Traceback (most recent call last):
+STDERR: 2021-02-25T04:34:42.953709442Z 	  File "/var/lib/docker/volumes/workflow_orchestrator_shared/_data/42a15c2e-2ba6-4027-9c9f-efc6a6b134ad/node-3ec6f9b1-3261-4276-b701-39c1eedf83bf-16349ee66b573b0d6cff3dbc6912349f/tmpg6r_7zt5/3ffd5489-3c54-4535-8150-4bdc20b7da1a/tziyutrhj/tmp-outriitig61/run_docker.py", line 179, in <module>
+STDERR: 2021-02-25T04:34:42.953713553Z 	    main(syn, args)
+STDERR: 2021-02-25T04:34:42.953719186Z 	  File "/var/lib/docker/volumes/workflow_orchestrator_shared/_data/42a15c2e-2ba6-4027-9c9f-efc6a6b134ad/node-3ec6f9b1-3261-4276-b701-39c1eedf83bf-16349ee66b573b0d6cff3dbc6912349f/tmpg6r_7zt5/3ffd5489-3c54-4535-8150-4bdc20b7da1a/tziyutrhj/tmp-outriitig61/run_docker.py", line 96, in main
+STDERR: 2021-02-25T04:34:42.953723386Z 	    for cont in client.containers.list(all=True):
+STDERR: 2021-02-25T04:34:42.953726545Z 	  File "/usr/local/lib/python3.6/site-packages/docker/models/containers.py", line 825, in list
+STDERR: 2021-02-25T04:34:42.953729991Z 	    return [self.get(r['Id']) for r in resp]
+STDERR: 2021-02-25T04:34:42.953733389Z 	  File "/usr/local/lib/python3.6/site-packages/docker/models/containers.py", line 825, in <listcomp>
+STDERR: 2021-02-25T04:34:42.953736879Z 	    return [self.get(r['Id']) for r in resp]
+STDERR: 2021-02-25T04:34:42.953739910Z 	  File "/usr/local/lib/python3.6/site-packages/docker/models/containers.py", line 778, in get
+STDERR: 2021-02-25T04:34:42.953743217Z 	    resp = self.client.api.inspect_container(container_id)
+STDERR: 2021-02-25T04:34:42.953746324Z 	  File "/usr/local/lib/python3.6/site-packages/docker/utils/decorators.py", line 19, in wrapped
+STDERR: 2021-02-25T04:34:42.953749729Z 	    return f(self, resource_id, *args, **kwargs)
+STDERR: 2021-02-25T04:34:42.953752849Z 	  File "/usr/local/lib/python3.6/site-packages/docker/api/container.py", line 756, in inspect_container
+STDERR: 2021-02-25T04:34:42.953756156Z 	    self._get(self._url("/containers/{0}/json", container)), True
+STDERR: 2021-02-25T04:34:42.953759465Z 	  File "/usr/local/lib/python3.6/site-packages/docker/api/client.py", line 226, in _result
+STDERR: 2021-02-25T04:34:42.953762723Z 	    self._raise_for_status(response)
+STDERR: 2021-02-25T04:34:42.953765756Z 	  File "/usr/local/lib/python3.6/site-packages/docker/api/client.py", line 222, in _raise_for_status
+STDERR: 2021-02-25T04:34:42.953769029Z 	    raise create_api_error_from_http_exception(e)
+STDERR: 2021-02-25T04:34:42.953772131Z 	  File "/usr/local/lib/python3.6/site-packages/docker/errors.py", line 31, in create_api_error_from_http_exception
+STDERR: 2021-02-25T04:34:42.953775555Z 	    raise cls(e, response=response, explanation=explanation)
+STDERR: 2021-02-25T04:34:42.953778778Z 	docker.errors.NotFound: 404 Client Error: Not Found ("No such container: 84053b0eaff0283c8be20e49908af5c69c97bd1096d6c3baef5e0fb0115c0de5")
+STDERR: 2021-02-25T04:34:42.953782300Z 	[job run_docker.cwl] Max memory used: 48MiB
+STDERR: 2021-02-25T04:34:42.953785443Z 	INFO:cwltool:[job run_docker.cwl] Max memory used: 48MiB
+STDERR: 2021-02-25T04:34:42.953788666Z 	[job run_docker.cwl] Job error:
+STDERR: 2021-02-25T04:34:42.953791844Z 	("Error collecting output for parameter 'predictions':\nAnti-PD1-DREAM-Infrastructure-master/run_docker.cwl:67:7: Did not find output file with glob pattern: '['predictions.csv']'", {})
+STDERR: 2021-02-25T04:34:42.953795718Z 	ERROR:cwltool:[job run_docker.cwl] Job error:
+STDERR: 2021-02-25T04:34:42.953798890Z 	("Error collecting output for parameter 'predictions':\nAnti-PD1-DREAM-Infrastructure-master/run_docker.cwl:67:7: Did not find output file with glob pattern: '['predictions.csv']'", {})
+STDERR: 2021-02-25T04:34:42.953805647Z 	[job run_docker.cwl] completed permanentFail
+STDERR: 2021-02-25T04:34:42.953809025Z 	WARNING:cwltool:[job run_docker.cwl] completed permanentFail
+STDERR: 2021-02-25T04:34:42.953812449Z 	Traceback (most recent call last):
+STDERR: 2021-02-25T04:34:42.953815617Z 	  File "/usr/local/lib/python3.6/site-packages/toil/worker.py", line 366, in workerScript
+STDERR: 2021-02-25T04:34:42.953819424Z 	    job._runner(jobGraph=jobGraph, jobStore=jobStore, fileStore=fileStore, defer=defer)
+STDERR: 2021-02-25T04:34:42.953822763Z 	  File "/usr/local/lib/python3.6/site-packages/toil/job.py", line 1392, in _runner
+STDERR: 2021-02-25T04:34:42.953826087Z 	    returnValues = self._run(jobGraph, fileStore)
+STDERR: 2021-02-25T04:34:42.953829274Z 	  File "/usr/local/lib/python3.6/site-packages/toil/job.py", line 1329, in _run
+STDERR: 2021-02-25T04:34:42.953832621Z 	    return self.run(fileStore)
+STDERR: 2021-02-25T04:34:42.953835656Z 	  File "/usr/local/lib/python3.6/site-packages/toil/cwl/cwltoil.py", line 937, in run
+STDERR: 2021-02-25T04:34:42.953838966Z 	    raise cwltool.errors.WorkflowException(status)
+STDERR: 2021-02-25T04:34:42.953842046Z 	cwltool.errors.WorkflowException: permanentFail
+STDERR: 2021-02-25T04:34:42.953845136Z 	ERROR:toil.worker:Exiting the worker because of a failed job on host 9e53af840e21
+STDERR: 2021-02-25T04:34:42.953849524Z 	WARNING:toil.jobGraph:Due to failure we are reducing the remaining retry count of job 'file:///var/lib/docker/volumes/workflow_orchestrator_shared/_data/42a15c2e-2ba6-4027-9c9f-efc6a6b134ad/Anti-PD1-DREAM-Infrastructure-master/run_docker.cwl' python3 kind-file_var_lib_docker_volumes_workflow_orchestrator_shared__data_42a15c2e-2ba6-4027-9c9f-efc6a6b134ad_Anti-PD1-DREAM-Infrastructure-master_run_docker.cwl/instance-wxl7r7bl with ID kind-file_var_lib_docker_volumes_workflow_orchestrator_shared__data_42a15c2e-2ba6-4027-9c9f-efc6a6b134ad_Anti-PD1-DREAM-Infrastructure-master_run_docker.cwl/instance-wxl7r7bl to 0
+STDERR: 2021-02-25T04:34:42.953854605Z <=========
+STDERR: 2021-02-25T04:34:42.956987516Z 9e53af840e21 2021-02-25 04:34:42,955 MainThread WARNING toil.leader: Job 'file:///var/lib/docker/volumes/workflow_orchestrator_shared/_data/42a15c2e-2ba6-4027-9c9f-efc6a6b134ad/Anti-PD1-DREAM-Infrastructure-master/run_docker.cwl' python3 kind-file_var_lib_docker_volumes_workflow_orchestrator_shared__data_42a15c2e-2ba6-4027-9c9f-efc6a6b134ad_Anti-PD1-DREAM-Infrastructure-master_run_docker.cwl/instance-wxl7r7bl with ID kind-file_var_lib_docker_volumes_workflow_orchestrator_shared__data_42a15c2e-2ba6-4027-9c9f-efc6a6b134ad_Anti-PD1-DREAM-Infrastructure-master_run_docker.cwl/instance-wxl7r7bl is completely failed
+STDERR: 2021-02-25T04:34:43.656127857Z 9e53af840e21 2021-02-25 04:34:43,654 MainThread INFO toil.leader: Job ended: 'https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/v3.0/cwl/validate_email.cwl' python3 kind-https_raw.githubusercontent.com_Sage-Bionetworks_ChallengeWorkflowTemplates_v3.0_cwl_validate_email.cwl/instance-d_v6k3qr
+STDERR: 2021-02-25T04:34:44.395023752Z 9e53af840e21 2021-02-25 04:34:44,394 MainThread INFO toil.leader: Job ended: 'https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/v3.0/cwl/annotate_submission.cwl' challengeutils kind-https_raw.githubusercontent.com_Sage-Bionetworks_ChallengeWorkflowTemplates_v3.0_cwl_annotate_submission.cwl/instance-safx_p4p
+STDERR: 2021-02-25T04:34:44.395141398Z 9e53af840e21 2021-02-25 04:34:44,394 MainThread INFO toil.leader: Issued job 'https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/v3.0/cwl/check_status.cwl' kind-https_raw.githubusercontent.com_Sage-Bionetworks_ChallengeWorkflowTemplates_v3.0_cwl_check_status.cwl/instance-kzk_57pc with job batch system ID: 12 and cores: 1, disk: 1.0 G, and memory: 100.0 M
+STDERR: 2021-02-25T04:34:45.434907547Z INFO:toil.worker:Redirecting logging to /var/lib/docker/volumes/workflow_orchestrator_shared/_data/42a15c2e-2ba6-4027-9c9f-efc6a6b134ad/node-3ec6f9b1-3261-4276-b701-39c1eedf83bf-16349ee66b573b0d6cff3dbc6912349f/tmpxd7c2yx4/worker_log.txt
+STDERR: 2021-02-25T04:34:45.479425718Z 9e53af840e21 2021-02-25 04:34:45,479 MainThread INFO toil.leader: Job ended: 'file:///var/lib/docker/volumes/workflow_orchestrator_shared/_data/42a15c2e-2ba6-4027-9c9f-efc6a6b134ad/Anti-PD1-DREAM-Infrastructure-master/determine_submission_number.cwl' python3 get_submission_number.py kind-file_var_lib_docker_volumes_workflow_orchestrator_shared__data_42a15c2e-2ba6-4027-9c9f-efc6a6b134ad_Anti-PD1-DREAM-Infrastructure-master_determine_submission_number.cwl/instance-hg4a58ax
+STDERR: 2021-02-25T04:34:45.743403197Z 9e53af840e21 2021-02-25 04:34:45,743 MainThread INFO toil.leader: Job ended: 'https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/v3.0/cwl/check_status.cwl' kind-https_raw.githubusercontent.com_Sage-Bionetworks_ChallengeWorkflowTemplates_v3.0_cwl_check_status.cwl/instance-kzk_57pc
+STDERR: 2021-02-25T04:34:45.744018880Z 9e53af840e21 2021-02-25 04:34:45,743 MainThread INFO toil.leader: Issued job 'https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/v3.0/cwl/validate_email.cwl' python3 kind-https_raw.githubusercontent.com_Sage-Bionetworks_ChallengeWorkflowTemplates_v3.0_cwl_validate_email.cwl/instance-d_v6k3qr with job batch system ID: 13 and cores: 1, disk: 1.0 G, and memory: 100.0 M
+STDERR: 2021-02-25T04:34:46.720023510Z INFO:toil.worker:Redirecting logging to /var/lib/docker/volumes/workflow_orchestrator_shared/_data/42a15c2e-2ba6-4027-9c9f-efc6a6b134ad/node-3ec6f9b1-3261-4276-b701-39c1eedf83bf-16349ee66b573b0d6cff3dbc6912349f/tmpu3ur9ign/worker_log.txt
+STDERR: 2021-02-25T04:34:46.900906170Z 9e53af840e21 2021-02-25 04:34:46,899 MainThread INFO toil.leader: Job ended: 'https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/v3.0/cwl/validate_email.cwl' python3 kind-https_raw.githubusercontent.com_Sage-Bionetworks_ChallengeWorkflowTemplates_v3.0_cwl_validate_email.cwl/instance-d_v6k3qr
+STDERR: 2021-02-25T04:34:52.786421654Z 9e53af840e21 2021-02-25 04:34:52,786 MainThread INFO toil.leader: Finished toil run with 9 failed jobs.
+STDERR: 2021-02-25T04:34:52.786526242Z 9e53af840e21 2021-02-25 04:34:52,786 MainThread INFO toil.leader: Failed jobs at end of the run: 'https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/v3.0/cwl/annotate_submission.cwl' challengeutils kind-https_raw.githubusercontent.com_Sage-Bionetworks_ChallengeWorkflowTemplates_v3.0_cwl_annotate_submission.cwl/instance-safx_p4p 'https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/v3.0/cwl/validate_docker.cwl' challengeutils kind-https_raw.githubusercontent.com_Sage-Bionetworks_ChallengeWorkflowTemplates_v3.0_cwl_validate_docker.cwl/instance-grflxysu 'file:///var/lib/docker/volumes/workflow_orchestrator_shared/_data/42a15c2e-2ba6-4027-9c9f-efc6a6b134ad/Anti-PD1-DREAM-Infrastructure-master/get_goldstandard.cwl' python3 get_gold.py kind-file_var_lib_docker_volumes_workflow_orchestrator_shared__data_42a15c2e-2ba6-4027-9c9f-efc6a6b134ad_Anti-PD1-DREAM-Infrastructure-master_get_goldstandard.cwl/instance-1h8yst9i 'CWLWorkflow' kind-CWLWorkflow/instance-1r0rvjby 'file:///var/lib/docker/volumes/workflow_orchestrator_shared/_data/42a15c2e-2ba6-4027-9c9f-efc6a6b134ad/Anti-PD1-DREAM-Infrastructure-master/determine_question.cwl' kind-file_var_lib_docker_volumes_workflow_orchestrator_shared__data_42a15c2e-2ba6-4027-9c9f-efc6a6b134ad_Anti-PD1-DREAM-Infrastructure-master_determine_question.cwl/instance-2fbbx4im 'https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/v3.0/cwl/get_docker_config.cwl' python3 kind-https_raw.githubusercontent.com_Sage-Bionetworks_ChallengeWorkflowTemplates_v3.0_cwl_get_docker_config.cwl/instance-11hp14dc 'file:///var/lib/docker/volumes/workflow_orchestrator_shared/_data/42a15c2e-2ba6-4027-9c9f-efc6a6b134ad/Anti-PD1-DREAM-Infrastructure-master/determine_submission_number.cwl' python3 get_submission_number.py kind-file_var_lib_docker_volumes_workflow_orchestrator_shared__data_42a15c2e-2ba6-4027-9c9f-efc6a6b134ad_Anti-PD1-DREAM-Infrastructure-master_determine_submission_number.cwl/instance-hg4a58ax 'file:///var/lib/docker/volumes/workflow_orchestrator_shared/_data/42a15c2e-2ba6-4027-9c9f-efc6a6b134ad/Anti-PD1-DREAM-Infrastructure-master/run_docker.cwl' python3 kind-file_var_lib_docker_volumes_workflow_orchestrator_shared__data_42a15c2e-2ba6-4027-9c9f-efc6a6b134ad_Anti-PD1-DREAM-Infrastructure-master_run_docker.cwl/instance-wxl7r7bl 'https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/v3.0/cwl/get_submission.cwl' challengeutils kind-https_raw.githubusercontent.com_Sage-Bionetworks_ChallengeWorkflowTemplates_v3.0_cwl_get_submission.cwl/instance-4mhqf_ny
+STDERR: 2021-02-25T04:34:52.794352243Z Traceback (most recent call last):
+STDERR: 2021-02-25T04:34:52.794377451Z   File "/usr/local/bin/toil-cwl-runner", line 8, in <module>
+STDERR: 2021-02-25T04:34:52.794382462Z     sys.exit(main())
+STDERR: 2021-02-25T04:34:52.794386297Z   File "/usr/local/lib/python3.6/site-packages/toil/cwl/cwltoil.py", line 1691, in main
+STDERR: 2021-02-25T04:34:52.794390157Z     outobj = toil.start(wf1)
+STDERR: 2021-02-25T04:34:52.794394142Z   File "/usr/local/lib/python3.6/site-packages/toil/common.py", line 829, in start
+STDERR: 2021-02-25T04:34:52.794398324Z     return self._runMainLoop(rootJobGraph)
+STDERR: 2021-02-25T04:34:52.794402357Z   File "/usr/local/lib/python3.6/site-packages/toil/common.py", line 1120, in _runMainLoop
+STDERR: 2021-02-25T04:34:52.794406011Z     jobCache=self._jobCache).run()
+STDERR: 2021-02-25T04:34:52.794409675Z   File "/usr/local/lib/python3.6/site-packages/toil/leader.py", line 269, in run
+STDERR: 2021-02-25T04:34:52.794413167Z     raise FailedJobsException(self.config.jobStore, self.toilState.totalFailedJobs, self.jobStore)
+STDERR: 2021-02-25T04:34:52.794420389Z toil.leader.FailedJobsException: The job store 'file:/var/lib/docker/volumes/workflow_orchestrator_shared/_data/42a15c2e-2ba6-4027-9c9f-efc6a6b134ad/tmpvm3tk697' contains 9 failed jobs: 'https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/v3.0/cwl/annotate_submission.cwl' challengeutils kind-https_raw.githubusercontent.com_Sage-Bionetworks_ChallengeWorkflowTemplates_v3.0_cwl_annotate_submission.cwl/instance-safx_p4p, 'https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/v3.0/cwl/validate_docker.cwl' challengeutils kind-https_raw.githubusercontent.com_Sage-Bionetworks_ChallengeWorkflowTemplates_v3.0_cwl_validate_docker.cwl/instance-grflxysu, 'file:///var/lib/docker/volumes/workflow_orchestrator_shared/_data/42a15c2e-2ba6-4027-9c9f-efc6a6b134ad/Anti-PD1-DREAM-Infrastructure-master/get_goldstandard.cwl' python3 get_gold.py kind-file_var_lib_docker_volumes_workflow_orchestrator_shared__data_42a15c2e-2ba6-4027-9c9f-efc6a6b134ad_Anti-PD1-DREAM-Infrastructure-master_get_goldstandard.cwl/instance-1h8yst9i, 'CWLWorkflow' kind-CWLWorkflow/instance-1r0rvjby, 'file:///var/lib/docker/volumes/workflow_orchestrator_shared/_data/42a15c2e-2ba6-4027-9c9f-efc6a6b134ad/Anti-PD1-DREAM-Infrastructure-master/determine_question.cwl' kind-file_var_lib_docker_volumes_workflow_orchestrator_shared__data_42a15c2e-2ba6-4027-9c9f-efc6a6b134ad_Anti-PD1-DREAM-Infrastructure-master_determine_question.cwl/instance-2fbbx4im, 'https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/v3.0/cwl/get_docker_config.cwl' python3 kind-https_raw.githubusercontent.com_Sage-Bionetworks_ChallengeWorkflowTemplates_v3.0_cwl_get_docker_config.cwl/instance-11hp14dc, 'file:///var/lib/docker/volumes/workflow_orchestrator_shared/_data/42a15c2e-2ba6-4027-9c9f-efc6a6b134ad/Anti-PD1-DREAM-Infrastructure-master/determine_submission_number.cwl' python3 get_submission_number.py kind-file_var_lib_docker_volumes_workflow_orchestrator_shared__data_42a15c2e-2ba6-4027-9c9f-efc6a6b134ad_Anti-PD1-DREAM-Infrastructure-master_determine_submission_number.cwl/instance-hg4a58ax, 'file:///var/lib/docker/volumes/workflow_orchestrator_shared/_data/42a15c2e-2ba6-4027-9c9f-efc6a6b134ad/Anti-PD1-DREAM-Infrastructure-master/run_docker.cwl' python3 kind-file_var_lib_docker_volumes_workflow_orchestrator_shared__data_42a15c2e-2ba6-4027-9c9f-efc6a6b134ad_Anti-PD1-DREAM-Infrastructure-master_run_docker.cwl/instance-wxl7r7bl, 'https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/v3.0/cwl/get_submission.cwl' challengeutils kind-https_raw.githubusercontent.com_Sage-Bionetworks_ChallengeWorkflowTemplates_v3.0_cwl_get_submission.cwl/instance-4mhqf_ny
+STDERR: 2021-02-25T04:34:52.794441369Z Log from job 'file:///var/lib/docker/volumes/workflow_orchestrator_shared/_data/42a15c2e-2ba6-4027-9c9f-efc6a6b134ad/Anti-PD1-DREAM-Infrastructure-master/run_docker.cwl' python3 kind-file_var_lib_docker_volumes_workflow_orchestrator_shared__data_42a15c2e-2ba6-4027-9c9f-efc6a6b134ad_Anti-PD1-DREAM-Infrastructure-master_run_docker.cwl/instance-wxl7r7bl follows:
+STDERR: 2021-02-25T04:34:52.794446697Z =========>
+STDERR: 2021-02-25T04:34:52.794450083Z 	INFO:toil.worker:---TOIL WORKER OUTPUT LOG---
+STDERR: 2021-02-25T04:34:52.794453971Z 	INFO:toil:Running Toil version 4.1.0-5ad5e77d98e1456b4f70f5b00e688a43cdce2ebe.
+STDERR: 2021-02-25T04:34:52.794458139Z 	[job run_docker.cwl] /var/lib/docker/volumes/workflow_orchestrator_shared/_data/42a15c2e-2ba6-4027-9c9f-efc6a6b134ad/node-3ec6f9b1-3261-4276-b701-39c1eedf83bf-16349ee66b573b0d6cff3dbc6912349f/tmpg6r_7zt5/3ffd5489-3c54-4535-8150-4bdc20b7da1a/tziyutrhj/tmp-outriitig61$ python3 \
+STDERR: 2021-02-25T04:34:52.794463140Z 	    /var/lib/docker/volumes/workflow_orchestrator_shared/_data/42a15c2e-2ba6-4027-9c9f-efc6a6b134ad/node-3ec6f9b1-3261-4276-b701-39c1eedf83bf-16349ee66b573b0d6cff3dbc6912349f/tmpg6r_7zt5/3ffd5489-3c54-4535-8150-4bdc20b7da1a/tziyutrhj/tmp-outriitig61/run_docker.py \
+STDERR: 2021-02-25T04:34:52.794467847Z 	    -s \
+STDERR: 2021-02-25T04:34:52.794471498Z 	    9711047 \
+STDERR: 2021-02-25T04:34:52.794474813Z 	    -p \
+STDERR: 2021-02-25T04:34:52.794478270Z 	    docker.synapse.org/syn23682103/sbp_bsr_challenge3 \
+STDERR: 2021-02-25T04:34:52.794481875Z 	    -d \
+STDERR: 2021-02-25T04:34:52.794485161Z 	    sha256:01f2c00824ade2e2ddc53c8e2b59724e68184d113326da2baa9c6a5450047fe0 \
+STDERR: 2021-02-25T04:34:52.794488973Z 	    --store \
+STDERR: 2021-02-25T04:34:52.794492343Z 	    --status \
+STDERR: 2021-02-25T04:34:52.794498983Z 	    VALIDATED \
+STDERR: 2021-02-25T04:34:52.794502967Z 	    --parentid \
+STDERR: 2021-02-25T04:34:52.794506651Z 	    syn24990920 \
+STDERR: 2021-02-25T04:34:52.794510207Z 	    -c \
+STDERR: 2021-02-25T04:34:52.794513971Z 	    /var/lib/docker/volumes/workflow_orchestrator_shared/_data/42a15c2e-2ba6-4027-9c9f-efc6a6b134ad/tmp67dophb2/stg6ebd9562-e9de-4632-95f7-829417d0fb73/.synapseConfig \
+STDERR: 2021-02-25T04:34:52.794518015Z 	    -i \
+STDERR: 2021-02-25T04:34:52.794521402Z 	    /home01/centos/challenge_data/CM_026_formatted_synthetic_data
+STDERR: 2021-02-25T04:34:52.794525460Z 	INFO:cwltool:[job run_docker.cwl] /var/lib/docker/volumes/workflow_orchestrator_shared/_data/42a15c2e-2ba6-4027-9c9f-efc6a6b134ad/node-3ec6f9b1-3261-4276-b701-39c1eedf83bf-16349ee66b573b0d6cff3dbc6912349f/tmpg6r_7zt5/3ffd5489-3c54-4535-8150-4bdc20b7da1a/tziyutrhj/tmp-outriitig61$ python3 \
+STDERR: 2021-02-25T04:34:52.794530584Z 	    /var/lib/docker/volumes/workflow_orchestrator_shared/_data/42a15c2e-2ba6-4027-9c9f-efc6a6b134ad/node-3ec6f9b1-3261-4276-b701-39c1eedf83bf-16349ee66b573b0d6cff3dbc6912349f/tmpg6r_7zt5/3ffd5489-3c54-4535-8150-4bdc20b7da1a/tziyutrhj/tmp-outriitig61/run_docker.py \
+STDERR: 2021-02-25T04:34:52.794534680Z 	    -s \
+STDERR: 2021-02-25T04:34:52.794538391Z 	    9711047 \
+STDERR: 2021-02-25T04:34:52.794542090Z 	    -p \
+STDERR: 2021-02-25T04:34:52.794545637Z 	    docker.synapse.org/syn23682103/sbp_bsr_challenge3 \
+STDERR: 2021-02-25T04:34:52.794549089Z 	    -d \
+STDERR: 2021-02-25T04:34:52.794552383Z 	    sha256:01f2c00824ade2e2ddc53c8e2b59724e68184d113326da2baa9c6a5450047fe0 \
+STDERR: 2021-02-25T04:34:52.794556089Z 	    --store \
+STDERR: 2021-02-25T04:34:52.794559366Z 	    --status \
+STDERR: 2021-02-25T04:34:52.794563463Z 	    VALIDATED \
+STDERR: 2021-02-25T04:34:52.794567380Z 	    --parentid \
+STDERR: 2021-02-25T04:34:52.794570816Z 	    syn24990920 \
+STDERR: 2021-02-25T04:34:52.794574718Z 	    -c \
+STDERR: 2021-02-25T04:34:52.794578578Z 	    /var/lib/docker/volumes/workflow_orchestrator_shared/_data/42a15c2e-2ba6-4027-9c9f-efc6a6b134ad/tmp67dophb2/stg6ebd9562-e9de-4632-95f7-829417d0fb73/.synapseConfig \
+STDERR: 2021-02-25T04:34:52.794582546Z 	    -i \
+STDERR: 2021-02-25T04:34:52.794586628Z 	    /home01/centos/challenge_data/CM_026_formatted_synthetic_data
+STDERR: 2021-02-25T04:34:52.794590264Z 	Welcome, antipd1dreamservice!
+STDERR: 2021-02-25T04:34:52.794593914Z
+STDERR: 2021-02-25T04:34:52.794597761Z 	root
+STDERR: 2021-02-25T04:34:52.794601750Z 	mounting volumes
+STDERR: 2021-02-25T04:34:52.794605779Z 	checking for containers
+STDERR: 2021-02-25T04:34:52.794609460Z 	Traceback (most recent call last):
+STDERR: 2021-02-25T04:34:52.794614257Z 	  File "/usr/local/lib/python3.6/site-packages/docker/api/client.py", line 220, in _raise_for_status
+STDERR: 2021-02-25T04:34:52.794618519Z 	    response.raise_for_status()
+STDERR: 2021-02-25T04:34:52.794625428Z 	  File "/usr/local/lib/python3.6/site-packages/requests/models.py", line 943, in raise_for_status
+STDERR: 2021-02-25T04:34:52.794630394Z 	    raise HTTPError(http_error_msg, response=self)
+STDERR: 2021-02-25T04:34:52.794634003Z 	requests.exceptions.HTTPError: 404 Client Error: Not Found for url: http+docker://localunixsocket/v1.30/containers/84053b0eaff0283c8be20e49908af5c69c97bd1096d6c3baef5e0fb0115c0de5/json
+STDERR: 2021-02-25T04:34:52.794638334Z
+STDERR: 2021-02-25T04:34:52.794642106Z 	During handling of the above exception, another exception occurred:
+STDERR: 2021-02-25T04:34:52.794645959Z
+STDERR: 2021-02-25T04:34:52.794649537Z 	Traceback (most recent call last):
+STDERR: 2021-02-25T04:34:52.794653334Z 	  File "/var/lib/docker/volumes/workflow_orchestrator_shared/_data/42a15c2e-2ba6-4027-9c9f-efc6a6b134ad/node-3ec6f9b1-3261-4276-b701-39c1eedf83bf-16349ee66b573b0d6cff3dbc6912349f/tmpg6r_7zt5/3ffd5489-3c54-4535-8150-4bdc20b7da1a/tziyutrhj/tmp-outriitig61/run_docker.py", line 179, in <module>
+STDERR: 2021-02-25T04:34:52.794658246Z 	    main(syn, args)
+STDERR: 2021-02-25T04:34:52.794663214Z 	  File "/var/lib/docker/volumes/workflow_orchestrator_shared/_data/42a15c2e-2ba6-4027-9c9f-efc6a6b134ad/node-3ec6f9b1-3261-4276-b701-39c1eedf83bf-16349ee66b573b0d6cff3dbc6912349f/tmpg6r_7zt5/3ffd5489-3c54-4535-8150-4bdc20b7da1a/tziyutrhj/tmp-outriitig61/run_docker.py", line 96, in main
+STDERR: 2021-02-25T04:34:52.794667542Z 	    for cont in client.containers.list(all=True):
+STDERR: 2021-02-25T04:34:52.794671567Z 	  File "/usr/local/lib/python3.6/site-packages/docker/models/containers.py", line 825, in list
+STDERR: 2021-02-25T04:34:52.794675759Z 	    return [self.get(r['Id']) for r in resp]
+STDERR: 2021-02-25T04:34:52.794679735Z 	  File "/usr/local/lib/python3.6/site-packages/docker/models/containers.py", line 825, in <listcomp>
+STDERR: 2021-02-25T04:34:52.794683938Z 	    return [self.get(r['Id']) for r in resp]
+STDERR: 2021-02-25T04:34:52.794687805Z 	  File "/usr/local/lib/python3.6/site-packages/docker/models/containers.py", line 778, in get
+STDERR: 2021-02-25T04:34:52.794691823Z 	    resp = self.client.api.inspect_container(container_id)
+STDERR: 2021-02-25T04:34:52.794695810Z 	  File "/usr/local/lib/python3.6/site-packages/docker/utils/decorators.py", line 19, in wrapped
+STDERR: 2021-02-25T04:34:52.794699788Z 	    return f(self, resource_id, *args, **kwargs)
+STDERR: 2021-02-25T04:34:52.794704074Z 	  File "/usr/local/lib/python3.6/site-packages/docker/api/container.py", line 756, in inspect_container
+STDERR: 2021-02-25T04:34:52.794708495Z 	    self._get(self._url("/containers/{0}/json", container)), True
+STDERR: 2021-02-25T04:34:52.794712827Z 	  File "/usr/local/lib/python3.6/site-packages/docker/api/client.py", line 226, in _result
+STDERR: 2021-02-25T04:34:52.794717169Z 	    self._raise_for_status(response)
+STDERR: 2021-02-25T04:34:52.794721092Z 	  File "/usr/local/lib/python3.6/site-packages/docker/api/client.py", line 222, in _raise_for_status
+STDERR: 2021-02-25T04:34:52.794725433Z 	    raise create_api_error_from_http_exception(e)
+STDERR: 2021-02-25T04:34:52.794729134Z 	  File "/usr/local/lib/python3.6/site-packages/docker/errors.py", line 31, in create_api_error_from_http_exception
+STDERR: 2021-02-25T04:34:52.794736203Z 	    raise cls(e, response=response, explanation=explanation)
+STDERR: 2021-02-25T04:34:52.794740599Z 	docker.errors.NotFound: 404 Client Error: Not Found ("No such container: 84053b0eaff0283c8be20e49908af5c69c97bd1096d6c3baef5e0fb0115c0de5")
+STDERR: 2021-02-25T04:34:52.794745062Z 	[job run_docker.cwl] Max memory used: 48MiB
+STDERR: 2021-02-25T04:34:52.794748891Z 	INFO:cwltool:[job run_docker.cwl] Max memory used: 48MiB
+STDERR: 2021-02-25T04:34:52.794752786Z 	[job run_docker.cwl] Job error:
+STDERR: 2021-02-25T04:34:52.794756531Z 	("Error collecting output for parameter 'predictions':\nAnti-PD1-DREAM-Infrastructure-master/run_docker.cwl:67:7: Did not find output file with glob pattern: '['predictions.csv']'", {})
+STDERR: 2021-02-25T04:34:52.794761673Z 	ERROR:cwltool:[job run_docker.cwl] Job error:
+STDERR: 2021-02-25T04:34:52.794765471Z 	("Error collecting output for parameter 'predictions':\nAnti-PD1-DREAM-Infrastructure-master/run_docker.cwl:67:7: Did not find output file with glob pattern: '['predictions.csv']'", {})
+STDERR: 2021-02-25T04:34:52.794770182Z 	[job run_docker.cwl] completed permanentFail
+STDERR: 2021-02-25T04:34:52.794773863Z 	WARNING:cwltool:[job run_docker.cwl] completed permanentFail
+STDERR: 2021-02-25T04:34:52.794777786Z 	Traceback (most recent call last):
+STDERR: 2021-02-25T04:34:52.794781839Z 	  File "/usr/local/lib/python3.6/site-packages/toil/worker.py", line 366, in workerScript
+STDERR: 2021-02-25T04:34:52.794786262Z 	    job._runner(jobGraph=jobGraph, jobStore=jobStore, fileStore=fileStore, defer=defer)
+STDERR: 2021-02-25T04:34:52.794790275Z 	  File "/usr/local/lib/python3.6/site-packages/toil/job.py", line 1392, in _runner
+STDERR: 2021-02-25T04:34:52.794794683Z 	    returnValues = self._run(jobGraph, fileStore)
+STDERR: 2021-02-25T04:34:52.794798745Z 	  File "/usr/local/lib/python3.6/site-packages/toil/job.py", line 1329, in _run
+STDERR: 2021-02-25T04:34:52.794802459Z 	    return self.run(fileStore)
+STDERR: 2021-02-25T04:34:52.794806374Z 	  File "/usr/local/lib/python3.6/site-packages/toil/cwl/cwltoil.py", line 937, in run
+STDERR: 2021-02-25T04:34:52.794810644Z 	    raise cwltool.errors.WorkflowException(status)
+STDERR: 2021-02-25T04:34:52.794814693Z 	cwltool.errors.WorkflowException: permanentFail
+STDERR: 2021-02-25T04:34:52.794818344Z 	ERROR:toil.worker:Exiting the worker because of a failed job on host 9e53af840e21
+STDERR: 2021-02-25T04:34:52.794823061Z 	WARNING:toil.jobGraph:Due to failure we are reducing the remaining retry count of job 'file:///var/lib/docker/volumes/workflow_orchestrator_shared/_data/42a15c2e-2ba6-4027-9c9f-efc6a6b134ad/Anti-PD1-DREAM-Infrastructure-master/run_docker.cwl' python3 kind-file_var_lib_docker_volumes_workflow_orchestrator_shared__data_42a15c2e-2ba6-4027-9c9f-efc6a6b134ad_Anti-PD1-DREAM-Infrastructure-master_run_docker.cwl/instance-wxl7r7bl with ID kind-file_var_lib_docker_volumes_workflow_orchestrator_shared__data_42a15c2e-2ba6-4027-9c9f-efc6a6b134ad_Anti-PD1-DREAM-Infrastructure-master_run_docker.cwl/instance-wxl7r7bl to 0
+STDERR: 2021-02-25T04:34:52.794828278Z <=========

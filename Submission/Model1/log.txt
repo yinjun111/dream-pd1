@@ -1,0 +1,13 @@
+
+#generate features
+
+/apps/R-4.0.2/bin/Rscript codes/szabo_inflammation_signature.R ../../SyntheticData/CM_026_formatted_synthetic_data_subset/GRCh37ERCC_refseq105_genes_count.csv output/test_szabo.txt
+
+/apps/python-3.5.2/bin/python3 codes/run_tide.py ../../SyntheticData/CM_026_formatted_synthetic_data_subset/GRCh37ERCC_refseq105_genes_tpm.csv output/test_tide.txt
+
+/apps/R-4.0.2/bin/Rscript codes/run_IMPRES.R ../../SyntheticData/CM_026_formatted_synthetic_data_subset/GRCh37ERCC_refseq105_genes_tpm.csv output/test_impres.txt
+
+#Predict
+docker pull rocker/tidyverse #failed for remotes/devtools
+docker pull jrowen/dcaret
+

@@ -1,0 +1,79 @@
+#C3_v3
+docker ps -a 
+
+docker commit bec2df28f2e4 sbp_bsr_challenge3:v3
+
+#cp new files
+docker cp codes/gen_features_bygenetpm_testdata.sh bec2df28f2e4:/codes/
+docker cp codes/Model_GBM_C3_v3.rdata bec2df28f2e4:/codes/
+docker cp codes/run_GBMmodel_C3_v3.R bec2df28f2e4:/codes/
+
+docker commit bec2df28f2e4 sbp_bsr_challenge3:v3
+
+#rm old files
+
+#docker run -it sbp_bsr_challenge3:v3 bash
+#docker commit 50d5fb9f45f1 sbp_bsr_challenge3:v1b
+
+#
+docker commit --change 'CMD ["bash","/codes/gen_features_bygenetpm_testdata.sh"]' bec2df28f2e4  sbp_bsr_challenge3:v3
+
+docker run -d sbp_bsr_challenge3:v3
+
+#run model
+cp -R ../Model_C3_v1/CM_026_formatted_synthetic_data_subset/ .
+docker run -v $(pwd)/CM_026_formatted_synthetic_data_subset/:/data:ro -v $(pwd)/output:/output:rw sbp_bsr_challenge3:v3
+
+#test input
+docker run -v $(pwd)/testinput/:/data:ro -v $(pwd)/testoutput:/output:rw sbp_bsr_challenge3:v3
+
+#
+#docker run -it -v $(pwd)/CM_026_formatted_synthetic_data_subset/:/data:ro -v $(pwd)/output:/output:rw sbp_bsr_challenge3:v3 bash
+
+#rename
+docker tag sbp_bsr_challenge3:v3 docker.synapse.org/syn23682103/sbp_bsr_challenge3:v3
+
+#submission
+docker login docker.synapse.org 
+docker push docker.synapse.org/syn23682103/sbp_bsr_challenge3:v3
+
+
+
+#-----------------
+
+
+
+docker build -t awesome-antipd1-q1-model:v3 .
+
+
+
+#interactive mode
+docker run -it awesome-antipd1-q1-model:v4 bash
+
+docker run -it -v $(pwd)/CM_026_formatted_synthetic_data_subset/:/data:ro -v $(pwd)/output:/output:rw awesome-antipd1-q1-model:v3 bash
+
+
+#commit changes in -it mode
+docker ps -a
+docker commit xxxxx awesome-antipd1-q1-model:v2
+
+#copy codes
+docker cp codes/. 6e97adc1ec0c:/codes/
+
+#RCurl
+#openssl
+#httr
+
+docker commit --change 'CMD ["bash","/codes/gen_features_bygenetpm_testdata.sh"]' 6e97adc1ec0c  awesome-antipd1-q1-model:v4
+
+docker run -d awesome-antipd1-q1-model:v4
+
+#Run model
+docker run -v $(pwd)/CM_026_formatted_synthetic_data_subset/:/data:ro -v $(pwd)/output:/output:rw awesome-antipd1-q1-model:v4r
+
+#rename
+docker tag sbp_bsr_challenge3:v1 docker.synapse.org/syn23682103/sbp_bsr_challenge3:v1
+
+#submission
+docker login 
+docker push docker.synapse.org/syn23682103/sbp_bsr_challenge3:v1

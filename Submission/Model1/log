@@ -1,0 +1,3 @@
+
+docker run -v $(pwd)/CM_026_formatted_synthetic_data_subset/:/data:ro -v $(pwd)/output:/output:rw awesome-antipd1-q1-model:v2
+

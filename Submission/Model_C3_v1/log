@@ -1,0 +1,34 @@
+docker build -t awesome-antipd1-q1-model:v3 .
+
+
+
+#interactive mode
+docker run -it awesome-antipd1-q1-model:v4 bash
+
+docker run -it -v $(pwd)/CM_026_formatted_synthetic_data_subset/:/data:ro -v $(pwd)/output:/output:rw awesome-antipd1-q1-model:v3 bash
+
+
+#commit changes in -it mode
+docker ps -a
+docker commit xxxxx awesome-antipd1-q1-model:v2
+
+#copy codes
+docker cp codes/. 6e97adc1ec0c:/codes/
+
+#RCurl
+#openssl
+#httr
+
+docker commit --change 'CMD ["bash","/codes/gen_features_bygenetpm_testdata.sh"]' 6e97adc1ec0c  awesome-antipd1-q1-model:v4
+
+docker run -d awesome-antipd1-q1-model:v4
+
+#Run model
+docker run -v $(pwd)/CM_026_formatted_synthetic_data_subset/:/data:ro -v $(pwd)/output:/output:rw awesome-antipd1-q1-model:v4r
+
+#rename
+docker tag sbp_bsr_challenge3:v1 docker.synapse.org/syn23682103/sbp_bsr_challenge3:v1
+
+#submission
+docker login 
+docker push docker.synapse.org/syn23682103/sbp_bsr_challenge3:v1

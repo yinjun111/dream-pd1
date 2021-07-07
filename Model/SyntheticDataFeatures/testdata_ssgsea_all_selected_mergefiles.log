@@ -1,0 +1,14 @@
+perl /data1/jyin/DREAM/Submission/Model_C3_v1/codes/mergefiles_caller.pl -m /data1/jyin/DREAM/Submission/Model_C3_v1/codes/gsea_selected.txt -i testdata_ssgsea_all.txt -o testdata_ssgsea_all_selected.txt --id , --od , -n T
+
+Start time: 2021-02-22 15:47:35
+
+Current version: 0.94
+
+
+
+sbptools mergefiles 0.94 running ...
+
+Model file /data1/jyin/DREAM/Submission/Model_C3_v1/codes/gsea_selected.txt:36 row(s) and 1 column(s) defined.
+Input file testdata_ssgsea_all.txt:4947 row(s) and 55 column(s) defined.
+
+Done.

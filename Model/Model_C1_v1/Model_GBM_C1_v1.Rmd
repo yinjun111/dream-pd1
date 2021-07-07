@@ -1,0 +1,235 @@
+---
+title: "R Notebook"
+output: html_notebook
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r}
+setwd("C:\\Projects_External\\DREAM\\Model\\Model_C3_v2")
+save.image("Build_Model_C3_v2.rdata")
+
+```
+
+
+```{r}
+
+library(pROC)
+library(caret)
+library(gbm)
+
+
+```
+
+
+
+```{r}
+
+data.exp<-read.csv("../../Training/AllMerged2/allmerged2_gene_expr.csv",header=T,row.names=1)
+
+data.anno<-read.table("../../Training/AllMerged2/all_clinical_data_allmerge2.txt",header=T,row.names=1,sep="\t")
+
+#zscore conversion
+data.exp.z<-t(apply(data.exp,1,function(x){
+  x.z<-unlist(lapply(split(unlist(x),unlist(data.anno[,10])),function(a) {
+    if(sd(a)==0 || is.na(sd(a)) ) {
+      rep(0,length(a))
+    } else {
+      (a-mean(a))/sd(a)
+    }
+  }))
+  x.z
+}))
+
+anno.split<-unlist(split(rownames(data.anno),unlist(data.anno[,10])))
+anno.rev<-data.anno[anno.split,]
+
+colnames(data.exp.z)<-rownames(anno.rev)
+
+
+
+#plot
+library(pheatmap)
+colanno<-data.frame("ORR"=data.anno[,1],"Tumor"=data.anno[,8])
+rownames(colanno)<-colnames(data.exp.z)
+
+pheatmap(data.exp.z,annotation_col = colanno)
+
+write.table(file="allmerge2_z_score.txt",data.exp.z,col.names = NA,quote=F,sep="\t")
+
+
+#merge data for training
+
+data.merged<-cbind(t(data.exp.z),anno.rev[,c(5,8,1)])
+
+data.merged$ORR<-factor(make.names(data.merged$ORR))
+data.merged$Sex<-factor(make.names(data.merged$Sex))
+
+colnames(data.merged)<-make.names(colnames(data.merged))
+
+
+```
+
+ANOVA
+```{r}
+
+
+data.exp.z.anova.p<-apply(data.exp.z,1,function(x){
+  
+  data.test<-as.data.frame(cbind(unlist(x),anno.rev))
+  colnames(data.test)<-c("Expr",colnames(anno.rev))
+  
+  #data.test.anova.p<-anova(aov(Expr~AgeGroup+Sex+Tumor+Study+ORR,data=data.test))$`Pr(>F)`[[5]]
+  data.test.anova.p<-anova(aov(Expr~Sex+Tumor+Study+ORR,data=data.test))$`Pr(>F)`[[4]]
+  
+  data.test.anova.p
+  
+})
+
+data.exp.z.anova.p[is.na(data.exp.z.anova.p)]<-1
+
+
+pheatmap(data.exp.z[data.exp.z.anova.p<0.01,],annotation_col = colanno)
+
+library(ggfortify)
+autoplot(prcomp(t(data.exp.z)), data = anno.rev, colour = 'ORR')
+
+autoplot(prcomp(t(data.exp.z[data.exp.z.anova.p<0.01,])), data = anno.rev, colour = 'Tumor',x = 1,y=2)
+
+```
+
+
+
+```{r}
+
+
+
+
+set.seed(234)
+
+#need to perform several trainings  #first try Hwang2020
+
+training <- data.merged[ data.anno$Study!="Hwang2020",]
+testing  <- data.merged[data.anno$Study=="Hwang2020",]
+
+
+
+```
+```{r}
+gbmGrid <-  expand.grid(interaction.depth = c(1,  3, 5), 
+                        n.trees = seq(1,20,2)*50, 
+                        shrinkage = c(0.1,0.01,0.001),
+                        n.minobsinnode = 20)
+
+
+fitControl1 <- trainControl(## 10-fold CV
+                           method = "cv",
+                           number = 10,
+                           classProbs = T,
+                           summaryFunction = twoClassSummary)
+
+gbmFit1 <- train(ORR ~ ., data = training, 
+                 method = "gbm", 
+                distribution="bernoulli",
+                 trControl = fitControl1,
+               metric = "ROC",
+                verbose=F)
+
+
+
+```
+
+
+
+Only sigs
+
+```{r}
+
+data.merged2<-cbind(t(data.exp.z[data.exp.z.anova.p<0.01,]),anno.rev[,c(5,8,1)])
+
+data.merged2$ORR<-factor(make.names(data.merged2$ORR))
+data.merged2$Sex<-factor(make.names(data.merged2$Sex))
+
+colnames(data.merged2)<-make.names(colnames(data.merged2))
+
+
+
+```
+
+
+
+```{r}
+
+set.seed(234)
+
+#need to perform several trainings  #first try Hwang2020
+
+training2 <- data.merged2[ anno.rev$Study!="Hwang2020",]
+testing2  <- data.merged2[anno.rev$Study=="Hwang2020",]
+
+training2.fold<-groupKFold(training2$Tumor,3)
+  
+  
+
+fitControl2 <- trainControl(## 10-fold CV
+                           method = "repeatedcv",
+                           number = 10,
+                           repeats = 10,
+                           index = training2.fold,
+                           classProbs = T,
+                           summaryFunction = twoClassSummary)
+
+gbmFit2 <- train(ORR ~ ., data = training2, 
+                 method = "gbm", 
+                distribution="bernoulli",
+                 trControl = fitControl2,
+               metric = "ROC",
+                verbose=F)
+
+
+testing2
+
+testing2.model.pred.prob<-predict(gbmFit2,newdata=testing2,type = "prob")
+
+plot(roc(testing2$ORR,testing2.model.pred.prob[,2]), print.auc = TRUE,col="red",print.auc.y=.1)
+
+
+```
+
+
+Random Forrest
+```{r}
+
+tunegrid <- expand.grid(.mtry = c(1,5,10)) 
+
+rfFit1 <- train(ORR ~ ., 
+                       data = training2,
+                       method = 'rf',
+                       metric = 'Accuracy',
+                       tuneGrid = tunegrid)
+
+
+```
+
+
+Build model for PFS
+```{r}
+
+
+all.model.pred.prob<-predict(gbmFit.all,newdata=data.merged,type = "prob")
+
+Hmisc::rcorr.cens(all.model.pred.prob[,2], Surv(data.anno$ORR, data.anno$Event))
+
+
+
+```
+
+
+GBM model
+```{r}
+
+
+
+
+```
+

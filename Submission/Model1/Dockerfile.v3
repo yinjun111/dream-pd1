@@ -1,0 +1,60 @@
+
+
+#install for TIDE
+FROM python:3.7
+
+RUN pip install tidepy numpy pandas==1.0.5
+
+COPY codes/run_tide.py /codes/run_tide.py
+
+#CMD ["python", "/codes/run_tide.py", "/data/GRCh37ERCC_refseq105_genes_tpm.csv", "/output/test_tide.txt"]
+#RUN python /codes/run_tide.py /data/GRCh37ERCC_refseq105_genes_tpm.csv /output/test_tide.txt
+
+
+FROM r-base:4.0.2
+#FROM jrowen/dcaret
+
+#install for IMPRES
+
+#RUN R -e "install.packages('devtools', repos = 'http://cran.us.r-project.org')"
+#RUN R -e "devtools::install_github('Benjamin-Vincent-Lab/binfotron')"
+
+RUN R -e "install.packages('ModelMetrics', repos = 'http://cran.us.r-project.org')"
+
+RUN R -e "install.packages('remotes', repos = 'http://cran.us.r-project.org')"
+RUN R -e "remotes::install_github('Benjamin-Vincent-Lab/binfotron')"
+RUN R -e 'stopifnot("binfotron" %in% installed.packages()[,"Package"])'
+
+RUN R -e "install.packages('caret', repos = 'http://cran.us.r-project.org')"
+RUN R -e 'stopifnot("caret" %in% installed.packages()[,"Package"])'
+
+RUN R -e "install.packages('e1071', repos = 'http://cran.us.r-project.org')"
+
+
+#install for Szabo
+RUN R -e "install.packages('BiocManager', repos = 'http://cran.us.r-project.org')"
+RUN R -e "BiocManager::install('NOISeq')"
+
+COPY codes/szabo_inflammation_signature.R /codes/szabo_inflammation_signature.R
+COPY codes/run_IMPRES.R /codes/run_IMPRES.R
+COPY codes/EDA_model1_submission.R /codes/EDA_model1_submission.R
+
+COPY training/data_tide.txt /training/data_tide.txt
+COPY training/data_impres.txt /training/data_impres.txt
+COPY training/data_szabo.txt /training/data_szabo.txt
+COPY training/data_clinical.txt /training/data_clinical.txt
+
+
+#Run commands to generate features for Test data
+#CMD ["Rscript", "/codes/szabo_inflammation_signature.R", "/data/GRCh37ERCC_refseq105_genes_count.csv", "/output/test_szabo.txt"]
+
+#CMD ["Rscript", "/codes/run_IMPRES.R", "/data/GRCh37ERCC_refseq105_genes_tpm.csv", "/output/test_impres.txt"]
+
+
+#Model and predict
+#CMD ["Rscript", "/codes/EDA_model1_submission.R"]
+
+ADD codes/submission_exec.sh /codes/
+RUN chmod +x /codes/submission_exec.sh
+
+CMD ["/codes/submission_exec.sh"]

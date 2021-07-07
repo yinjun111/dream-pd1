@@ -1,0 +1,12 @@
+
+FROM ubuntu:latest
+
+#-------
+#Running code
+#-------
+
+RUN chmod +x /codes/gen_features_bygenetpm_testdata.sh
+
+CMD ["sh","/codes/gen_features_bygenetpm_testdata.sh"]
+
+

@@ -1,0 +1,14 @@
+perl /data1/jyin/DREAM/Submission/Model_C3_v1/codes/mergefiles_caller.pl -m /data1/jyin/DREAM/Submission/Model_C3_v1/codes/genes_sel_final.txt -i GRCh37ERCC_refseq105_genes_tpm.csv -o testdata_filtered.txt --id , --od , --n T
+
+Start time: 2021-02-22 15:46:08
+
+Current version: 0.94
+
+
+
+sbptools mergefiles 0.94 running ...
+
+Model file /data1/jyin/DREAM/Submission/Model_C3_v1/codes/genes_sel_final.txt:18653 row(s) and 1 column(s) defined.
+Input file GRCh37ERCC_refseq105_genes_tpm.csv:29183 row(s) and 55 column(s) defined.
+
+Done.

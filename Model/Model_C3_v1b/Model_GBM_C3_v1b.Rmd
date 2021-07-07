@@ -1,0 +1,199 @@
+---
+title: "R Notebook"
+output: html_notebook
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r}
+
+setwd("/data1/jyin/DREAM/Model/Model_C3_v1/")
+
+load("Model_GBM_v1.rdata")
+
+save.image("Model_GBM_C3_v1b.rdata")
+
+
+```
+
+```{r}
+library(caret)
+library(gbm)
+library(pROC)
+
+
+```
+
+
+```{r}
+
+data.exp<-read.csv("Features/pd1_tmpz_selected.txt",header=T,row.names=1)
+data.morefeatures<-read.table("Features/pd1_morefeatures_selected.txt",header=T,row.names=1,sep="\t")
+data.gsea<-read.table("Features/pd1_gsea_selected.txt",header=T,row.names=1,sep="\t")
+
+data.anno<-read.table("../Training/AllMerged/all_clinical_data_rev2.txt",header=T,row.names=1,sep="\t")
+
+
+data.merged<-cbind(t(data.exp),data.morefeatures,data.gsea,data.anno[,c(5,11,1)])
+
+data.merged$ORR<-factor(make.names(data.merged$ORR))
+data.merged$Sex<-factor(make.names(data.merged$Sex))
+
+colnames(data.merged)<-make.names(colnames(data.merged))
+
+
+```
+
+
+
+Test Hugo2016
+
+```{r}
+
+set.seed(123)
+
+
+training1 <- data.merged[ data.anno$Study!="Hugo2016",]
+testing1  <- data.merged[data.anno$Study=="Hugo2016",]
+
+training1.fold<-groupKFold(data.anno[data.anno$Study!="Hugo2016",]$Study,4)
+
+fitControl1 <- trainControl(## 10-fold CV
+                           method = "repeatedcv",
+                           number = 10,
+                           ## repeated ten times
+                           repeats = 30,
+                           index = training1.fold,
+                           classProbs = T,
+                           summaryFunction = twoClassSummary)
+
+gbmGrid <-  expand.grid(interaction.depth = c(1, 2, 3,4,5,6), 
+                        n.trees = seq(2,21,2)*50, 
+                        shrinkage = c(0.1,0.01,0.001),
+                        n.minobsinnode = 10)
+
+gbmFit1 <- train(ORR ~ ., data = training1, 
+                 method = "gbm", 
+                distribution="bernoulli",
+                 trControl = fitControl1, 
+                  metric = "ROC",
+                 tuneGrid = gbmGrid,
+                verbose = F
+)
+
+
+testing1.model.pred.prob<-predict(gbmFit1,newdata=testing1,type = "prob")
+
+#n.trees =700, interaction.depth = 1, shrinkage = 0.01 and #n.minobsinnode
+# = 10.
+
+#ROC
+library(pROC)
+
+#AUC 0.782
+
+plot(roc(testing1$ORR, testing1$data.tmb.sel), print.auc = TRUE,col="blue",print.auc.y=.4)
+plot(roc(testing1$ORR, testing1$data.tide.sel), print.auc = TRUE,col="green",add=T,print.auc.y=.3)
+plot(roc(testing1$ORR, testing1$CD274), print.auc = TRUE,col="orange",add=T,print.auc.y=.2)
+plot(roc(testing1$ORR,testing1.model.pred.prob[,2]), print.auc = TRUE,col="red",add=T,print.auc.y=.1)
+```
+
+
+Test Clougesy2019
+```{r}
+
+set.seed(123)
+
+
+training2 <- data.merged[ data.anno$Study!="Clougesy2019",]
+testing2  <- data.merged[data.anno$Study=="Clougesy2019",]
+
+training2.fold<-groupKFold(data.anno[data.anno$Study!="Clougesy2019",]$Study,4)
+
+fitControl2 <- trainControl(## 10-fold CV
+                           method = "repeatedcv",
+                           number = 10,
+                           ## repeated ten times
+                           repeats = 30,
+                           index = training2.fold,
+                           classProbs = T,
+                           summaryFunction = twoClassSummary)
+
+gbmGrid <-  expand.grid(interaction.depth = c(1, 2, 3,4,5,6), 
+                        n.trees = seq(2,21,2)*50, 
+                        shrinkage = c(0.1,0.01,0.001),
+                        n.minobsinnode = 10)
+
+gbmFit2 <- train(ORR ~ ., data = training2, 
+                 method = "gbm", 
+                distribution="bernoulli",
+                 trControl = fitControl2, 
+                  metric = "ROC",
+                 tuneGrid = gbmGrid,
+                verbose = F
+)
+
+
+testing2.model.pred.prob<-predict(gbmFit2,newdata=testing2,type = "prob")
+
+#testing.model.pred.prob2<-predict.gbm(gbmFit1,newdata=testing,n.trees=150) #doesn't work...
+
+
+#n.trees =
+#The final values used for the model were n.trees =
+# 500, interaction.depth = 1, shrinkage = 0.1 and #n.minobsinnode
+# = 10.
+
+#ROC
+library(pROC)
+
+#AUC 0.694
+
+plot(roc(testing2$ORR, testing2$data.tmb.sel), print.auc = TRUE,col="blue",print.auc.y=.4)
+plot(roc(testing2$ORR, testing2$data.tide.sel), print.auc = TRUE,col="green",add=T,print.auc.y=.3)
+plot(roc(testing2$ORR, testing2$CD274), print.auc = TRUE,col="orange",add=T,print.auc.y=.2)
+plot(roc(testing2$ORR,testing2.model.pred.prob[,2]), print.auc = TRUE,col="red",add=T,print.auc.y=.1)
+
+
+
+```
+
+
+```{r}
+
+set.seed(123)
+
+
+training.all <- data.merged
+#testing2  <- data.merged[data.anno$Study=="Clougesy2019",]
+
+training.all.fold<-groupKFold(data.anno$Study,5)
+
+fitControl.all <- trainControl(## 10-fold CV
+                           method = "repeatedcv",
+                           number = 10,
+                           ## repeated ten times
+                           repeats = 30,
+                           index = training.all.fold,
+                           classProbs = T,
+                           summaryFunction = twoClassSummary)
+
+gbmGrid.all <-  expand.grid(interaction.depth = 1, 
+                        n.trees = seq(10,12,2)*50, 
+                        shrinkage = c(0.1,0.01),
+                        n.minobsinnode = 10)
+
+gbmFit.all <- train(ORR ~ ., data = training.all, 
+                 method = "gbm", 
+                distribution="bernoulli",
+                 trControl = fitControl.all, 
+                  metric = "ROC",
+                 tuneGrid = gbmGrid.all,
+                verbose = F
+)
+
+
+```
+
+
+

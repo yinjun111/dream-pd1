@@ -1,0 +1,224 @@
+---
+title: "R Notebook"
+output: html_notebook
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r}
+
+setwd("C:\\Projects_External\\DREAM\\Model")
+load("Model_GBM_v1.rdata")
+
+
+```
+
+```{r}
+
+library(pROC)
+library(caret)
+library(gbm)
+
+
+```
+
+
+```{r}
+
+data.exp<-read.csv("Features/pd1_tmpz_selected.txt",header=T,row.names=1)
+data.morefeatures<-read.table("Features/pd1_morefeatures_selected.txt",header=T,row.names=1,sep="\t")
+data.gsea<-read.table("Features/pd1_gsea_selected.txt",header=T,row.names=1,sep="\t")
+
+data.anno<-read.table("../Training/AllMerged/all_clinical_data_rev2.txt",header=T,row.names=1,sep="\t")
+
+
+data.merged<-cbind(t(data.exp),data.morefeatures,data.gsea,data.anno[,c(5,11,1)])
+
+data.merged$ORR<-factor(make.names(data.merged$ORR))
+data.merged$Sex<-factor(make.names(data.merged$Sex))
+
+colnames(data.merged)<-make.names(colnames(data.merged))
+
+
+```
+
+
+The function createDataPartition can be used to create a stratified random sample of the data into training and test sets
+
+```{r}
+library(caret)
+library(gbm)
+
+set.seed(234)
+
+inTraining <- createDataPartition(data.merged$ORR, p = .75, list = FALSE)
+training <- data.merged[ inTraining,]
+testing  <- data.merged[-inTraining,]
+
+
+```
+
+
+```{r}
+
+fitControl <- trainControl(## 10-fold CV
+                           method = "repeatedcv",
+                           number = 10,
+                           ## repeated ten times
+                           repeats = 10)
+
+fitControl1 <- trainControl(## 10-fold CV
+                           method = "cv",
+                           number = 10,
+                           classProbs = T,
+                           summaryFunction = twoClassSummary)
+
+gbmGrid <-  expand.grid(interaction.depth = c(1, 2, 3,4,5), 
+                        n.trees = seq(1,20,2)*50, 
+                        shrinkage = c(0.1,0.01),
+                        n.minobsinnode = 20)
+
+
+nrow(gbmGrid) #180
+
+
+
+gbmFit <- train(ORR ~ ., data = training, 
+                 method = "gbm", 
+                distribution="bernoulli",
+                 trControl = fitControl, 
+                 verbose = T, 
+                 ## Now specify the exact models 
+                 ## to evaluate:
+                 tuneGrid = gbmGrid)
+
+gbmFit1 <- train(ORR ~ ., data = training, 
+                 method = "gbm", 
+                distribution="bernoulli",
+                 trControl = fitControl1,
+                metric = "ROC",
+                verbose=F)
+
+# 3                  150      0.7472222  0.7500000  0.6133333
+
+
+#plots
+ggplot(gbmFit1)
+
+densityplot(gbmFit1, pch = "|")
+
+
+#prediction
+
+#model.pred.prob<-predict(gbmFit1,newdata=training,type = "prob")
+
+testing.model.pred.prob<-predict(gbmFit1,newdata=testing,type = "prob")
+
+#testing.model.pred.prob2<-predict.gbm(gbmFit1,newdata=testing,n.trees=150) #doesn't work...
+
+
+#ROC
+
+plot(roc(training$ORR, training$data.tmb.sel), print.auc = TRUE,col="blue",print.auc.y=.4)
+plot(roc(training$ORR, training$data.tide.sel), print.auc = TRUE,col="green",add=T,print.auc.y=.3)
+plot(roc(training$ORR, training$CD274), print.auc = TRUE,col="orange",add=T,print.auc.y=.2)
+plot(roc(training$ORR, model.pred.prob[,2]), print.auc = TRUE,col="red",add=T,print.auc.y=.1)
+
+
+plot(roc(testing$ORR, testing$data.tmb.sel), print.auc = TRUE,col="blue",print.auc.y=.4)
+plot(roc(testing$ORR, testing$data.tide.sel), print.auc = TRUE,col="green",add=T,print.auc.y=.3)
+plot(roc(testing$ORR, testing$CD274), print.auc = TRUE,col="orange",add=T,print.auc.y=.2)
+plot(roc(testing$ORR,testing.model.pred.prob[,2]), print.auc = TRUE,col="red",add=T,print.auc.y=.1)
+
+
+
+
+```
+
+#model 2, only gene+age+sex
+```{r}
+
+data.merged2<-cbind(t(data.exp),data.anno[,c(5,11,1)])
+
+data.merged2$ORR<-factor(make.names(data.merged2$ORR))
+data.merged2$Sex<-factor(make.names(data.merged2$Sex))
+
+colnames(data.merged2)<-make.names(colnames(data.merged2))
+
+inTraining2 <- createDataPartition(data.merged2$ORR, p = .75, list = FALSE)
+training2 <- data.merged2[ inTraining2,]
+testing2  <- data.merged2[-inTraining2,]
+
+#build model
+gbmFit2 <- train(ORR ~ ., data = training2, 
+                 method = "gbm", 
+                distribution="bernoulli",
+                 trControl = fitControl1,
+                metric = "ROC",
+                verbose=F)
+
+testing2.model.pred.prob<-predict(gbmFit2,newdata=testing2,type = "prob")
+
+plot(roc(testing2$ORR, data.merged[-inTraining2,"data.tmb.sel"]), print.auc = TRUE,col="blue",print.auc.y=.4)
+plot(roc(testing2$ORR, data.merged[-inTraining2,"data.tide.sel"]), print.auc = TRUE,col="green",add=T,print.auc.y=.3)
+plot(roc(testing2$ORR, testing2$CD274), print.auc = TRUE,col="orange",add=T,print.auc.y=.2)
+plot(roc(testing2$ORR,testing2.model.pred.prob[,2]), print.auc = TRUE,col="red",add=T,print.auc.y=.1)
+
+
+```
+
+
+TCGA
+```{r}
+
+tcga.exp<-read.csv("Features/tcga_tmpz_selected.txt",header=T,row.names=1)
+tcga.morefeatures<-read.table("Features/tcga_morefeatures_selected.txt",header=T,row.names=1,sep="\t")
+tcga.gsea<-read.table("Features/tcga_gsea_selected.txt",header=T,row.names=1,sep="\t")
+
+tcga.anno<-read.table("../TCGA/Expr-Merged/tcga_clinical_data.txt",header=T,row.names=1,sep="\t")
+tcga.anno<-tcga.anno[-1,]
+
+tcga.merged$ORR<-factor(tcga.merged$ORR)
+
+
+tcga.merged<-cbind(t(tcga.exp),tcga.morefeatures,tcga.gsea,tcga.anno[,c(5,11,1)])
+
+colnames(tcga.merged)<-colnames(data.merged)
+
+tcga.merged$Sex<-factor(make.names(tcga.merged$Sex))
+
+tcga.merged[is.na(tcga.merged)]<-0
+
+
+tcga.model.pred.prob<-predict(gbmFit1,newdata=tcga.merged,type = "prob")
+
+
+plot(roc(tcga.merged$ORR,tcga.model.pred.prob[,2]), print.auc = TRUE,col="red",print.auc.y=.1)
+
+```
+
+
+
+Test Falco model
+
+```{r}
+
+load("Model_GBM_v1.rdata")
+
+testing.model.pred<-predict(gbmFit,newdata=testing)
+testing.model.pred.prob<-predict(gbmFit,newdata=testing,type = "prob")
+
+plot(roc(testing$ORR, testing$data.tmb.sel), print.auc = TRUE,col="blue",print.auc.y=.4)
+text(0.3,0.4,"TMB",pos = 4,col="blue")
+
+plot(roc(testing$ORR, testing$data.tide.sel), print.auc = TRUE,col="green",add=T,print.auc.y=.3)
+plot(roc(testing$ORR, testing$CD274), print.auc = TRUE,col="orange",add=T,print.auc.y=.2)
+plot(roc(testing$ORR,testing.model.pred.prob[,2]), print.auc = TRUE,col="red",add=T,print.auc.y=.1)
+
+
+#confusionmatrix
+confusionMatrix(testing.model.pred,testing$ORR)
+
+
+```
+
